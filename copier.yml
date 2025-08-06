@@ -1,5 +1,6 @@
 _exclude:
     - licenses
+    - .git
 
 # questions
 model_display_name:
