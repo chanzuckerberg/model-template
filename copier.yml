@@ -10,10 +10,7 @@ model_display_name:
         {% if not (model_display_name | regex_search('^[a-zA-Z0-9\-_\s]+$')) %}
         model_display_name cannot have any characters other than alphanumerics, dashes, spaces, and underscores.
         {% endif %}
-model_name_slug:
-    type: str
-    default: "{{ model_display_name | trim | lower | replace(' ', '_') | replace('-', '_') }}"
-    help: The model display formatted, remove non-alphanumerics
+
 model_version:
     type: str
     default: v0.0.1
@@ -26,6 +23,12 @@ license_name:
     - MIT
     - Apache2
   default: MIT
+
+model_name_slug:
+    type: str
+    default: "{{ model_display_name | trim | lower | replace(' ', '_') | replace('-', '_') }}"
+    help: The model display formatted, remove non-alphanumerics
+    when: false
 
 model_class_prefix: 
     type: str
