@@ -1,0 +1,40 @@
+_exclude:
+    - licenses
+
+# questions
+model_display_name:
+    type: str
+    help: What is your model name?
+    validator: >-
+        {% if not (model_display_name | regex_search('^[a-zA-Z0-9\-_\s]+$')) %}
+        model_display_name cannot have any characters other than alphanumerics, dashes, spaces, and underscores.
+        {% endif %}
+model_name_slug:
+    type: str
+    default: "{{ model_display_name | trim | lower | replace(' ', '_') | replace('-', '_') }}"
+    help: The model display formatted, remove non-alphanumerics
+model_version:
+    type: str
+    default: v0.0.1
+    help: What is the model version?
+
+license_name:
+  type: str
+  help: Choose a license
+  choices:
+    - MIT
+    - Apache2
+  default: MIT
+
+model_class_prefix: 
+    type: str
+    default: "{{ model_name_slug.split('_') | map('capitalize') | join }}"
+    help: Model prefix, used in class names so it will look like `MyModel`
+    when: false
+
+model_class_suffix:
+    type: str
+    default: "MLflowModel"
+    help: Model suffix, used in class names so it will look like `MyModelMLflowModel`
+    when: false
+

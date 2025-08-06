@@ -1,0 +1,179 @@
+### Model Card Details Template
+
+# How to use this YAML file:
+# Fill in your information within the quotations ("") e.g. model_display_name: "ModelX"  
+# ~ or ~
+# Add a info block for each item that you would like to add to a category 
+# e.g. authors:  
+#         - name: "Jane Doe"
+#           type: "individual"
+#           affiliate: "Chan Zuckerberg Initiative"  
+#         - name: "Chan Zuckerberg Initiative"
+#           type: "organization"
+# ~ or ~
+# Choose from a list provided by deleting the irrelevant items leaving only the list items you wish to select
+# You can also add your own items to these lists by adding a list item with a dash
+# e.g. tasks_performed_by_model:       
+#        - Cell Clustering
+#        - Cell Labeling
+#        - Cross Species Integration
+#.       - Special Task Added To List
+
+### Basic Info
+model_display_name: "{{ model_display_name }}"             
+model_version: "{{ model_version }}"               # vX.X.X or YYYY-MM-DD format
+primary_contact_email: ""
+repository_link: ""
+publication_preprint_link: ""
+release_date: ""                # YYYY-MM-DD
+model_domain: ""                # one of "Imaging" or "Transcriptomic"
+model_description: ""      
+short_description: ""           # Max 140 characters
+authors:                        # List one or more individuals or organizations 
+  - name: ""
+    type: ""                    #   one of "individual" or "organization"
+    affiliate: ""               #   (optional) if it is an "individual", add an affiliated organization name        
+licenses:                       # Add one or more licenses
+  - type: "{{ license_name }}"                    #   e.g "CC BY 4.0"
+    url: ""                     #   e.g "https://creativecommons.org/licenses/by/4.0/deed.en"
+compute_requirement: ""         # one of "GPU" or "CPU"
+system_requirement: ""          # (optional) Any other system constraints or requirements you would like to describe.
+
+### Model Details
+model_architecture_type:        # Choose from any architectures or packages below and/or add onto the list
+  - PyTorch
+  - TensorFlow
+  - JAX
+  - Safetensors
+  - Transformers
+  - PEFT
+  - TensorBoard
+  - GGUF
+  - Diffusers
+  - ONNX
+  - stable-baselines3
+  - sentence-transformers
+  - ml-agents
+  - MLX
+  - TF-Keras
+  - Adapters
+  - Keras
+  - setfit
+  - timm
+  - sample-factory
+  - Transformers.js
+tasks_performed_by_model:       # Choose from any tasks below and/or add onto the list
+  - Batch Correction
+  - Cell Clustering
+  - Cell Labeling
+  - Cell Morphology Profiling
+  - Cell Type Annotation
+  - Cell Type Classification
+  - Contrast Transfer Function (CTF) Estimation
+  - Cross Species Integration
+  - CryoET Particle Picking
+  - Data Integration
+  - Differential Expression
+  - Feature Extraction
+  - Frame Alignment & Motion Correction
+  - Gene Network Inference
+  - Imputation
+  - Perturbation Detection/Prediction
+  - Protein Localization
+  - Tomogram Alignment / Reconstruction
+  - Virtual Staining
+finetuned_from:                 # (optional) If applicable. Add one or more.
+  - model_name: ""
+    model_url: ""
+model_variants:                 # (optional) If applicable. Add one or more.
+  - variant_name: ""
+    variant_description: ""
+    variant_url: ""
+
+### Training Details
+training_date: ""               # (optional) YYYY-MM-DD 
+input_data_type:                # Choose from any data types below and/or add onto the list
+  - pdf                         
+  - svg
+  - png
+  - jpg
+  - zarr
+  - czi
+  - tiff
+  - mrc
+  - hdf5
+  - csv
+  - docx
+  - txt            
+output_data_type:               # Choose from any data types below and/or add onto the list
+  - embeddings                  
+  - cell types
+  - images     
+# To gather Training Dataset data, we use the ~Cross Modality Schema~ which standardizes biological information. 
+# https://github.com/chanzuckerberg/data-guidance/blob/main/standards/cross-modality/1.1.0/schema.md
+training_datasets:               
+  - dataset_name: ""
+    dataset_license: ""
+    dataset_version: ""
+    dataset_url: ""
+    dataset_datePublished: ""                # YYYY-MM-DD
+    dataset_collectionTimeframe: ""          # YYYY-MM-DD/YYYY-MM-DD
+    modality: ""                             # one of "Imaging" or "Transcriptomic"
+    # If modality = Transcriptomic:
+    assay_ontology_term_id: ""               # e.g. "EFO:0009922" Search the Experimental Factor Ontology (https://www.ebi.ac.uk/ols4/ontologies/efo/) for dataset assay like "10x 3' v3" or "Perturb-Seq" and copy the id.
+    # If modality = Imaging
+    imaging_technology:                      # Choose imaging technology type from the list below and/or write in a different technology
+      - Brightfield Microscopy
+      - Phase Contrast Microscopy
+      - Differential Interference Contrast (DIC)
+      - Fluorescence Microscopy
+      - Confocal Microscopy
+      - Spinning Disk Confocal Microscopy
+      - Two-Photon Microscopy
+      - Total Internal Reflection Fluorescence (TIRF)
+      - STED
+      - SIM
+      - PALM
+      - STORM
+      - Transmission Electron Microscopy (TEM)
+      - Scanning Electron Microscopy (SEM)
+      - Cryo-Electron Microscopy (Cryo-EM)
+      - Cryo-Electron Tomography (Cryo-ET)
+      - Imaging Mass Cytometry (IMC)
+      - Multiplexed Ion Beam Imaging (MIBI)
+      - CODEX
+      - Cyclic Immunofluorescence (CycIF)
+      - Multiplexed Immunohistochemistry (mIHC)
+      - seqFISH / MERFISH
+      - Hematoxylin & Eosin (H&E) Staining
+      - Immunohistochemistry (IHC)
+      - Immunofluorescence (IF)
+      - Whole Slide Imaging (WSI)
+      - Electron microscopy
+      - Cryo-electron microscopy
+      - Fluorescence light microscopy
+      - Transmission light microscopy
+      - Super resolution microscopy
+      - X-ray microscopy
+      - Force microscopy
+      - High-contrast microscopy
+      - Whole-slide microscopy
+    disease_ontology_term_id: ""             # e.g "PATO:0000461" for normal or healthy. Please follow these instructions for diseased and injured: https://github.com/chanzuckerberg/data-guidance/blob/main/standards/cross-modality/1.1.0/schema.md#disease_ontology_term_id
+    organism_ontology_term_id: ""            # e.g. "NCBITaxon:9606" for Human. Please follow these instructions: https://github.com/chanzuckerberg/data-guidance/blob/main/standards/cross-modality/1.1.0/schema.md#organism_ontology_term_id
+    development_stage_ontology_term_id: ""   # Please follow these instructions: https://github.com/chanzuckerberg/data-guidance/blob/main/standards/cross-modality/1.1.0/schema.md#development_stage_ontology_term_id
+    tissue_type: ""                          # one of "tissue", "organoid", "cell culture", "cell line" or "organelle"
+    tissue_ontology_term_id: ""              # Please follow these instructions: https://github.com/chanzuckerberg/data-guidance/blob/main/standards/cross-modality/1.1.0/schema.md#tissue_ontology_term_id
+    num_of_cells: ""                         # e.g. "1000000"   
+
+
+### Other Resources
+related_models:                 # (optional) Link any other models your model should be associated with.
+  - model_name: ""
+    model_url: ""
+related_datasets:               # (optional) Link any other datasets your model should be associated with.
+  - dataset_name: ""
+    dataset_url: "" 
+# See the Model Contribution Docs for detailed instructions on providing a Quickstart and Tutorial link: https://chanzuckerberg.github.io/virtual-cells-platform/ 
+quickstart_colab_link: ""       # template -> https://colab.research.google.com/drive/1VfrAM-BxXwUveDqhdwViD8BOH5yk_FU6
+tutorial_colab_link: ""         # (optional but encouraged) template -> https://colab.research.google.com/drive/1DrRY_mJyYkx3Bg-Y9Ev9X209jGwt8wVF?usp=sharing
+model_download_link: ""         # e.g. s3://.. (not needed if model is packaged in MLFlow) 
