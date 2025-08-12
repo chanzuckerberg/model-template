@@ -24,6 +24,11 @@ license_name:
     - Apache2
   default: MIT
 
+test_field:
+  type: str
+  default: "TEST_VALUE_FROM_COPIER"
+  help: Test field to verify copier is working
+
 model_name_slug:
     type: str
     default: "{{ model_display_name | trim | lower | replace(' ', '_') | replace('-', '_') }}"
@@ -41,4 +46,125 @@ model_class_suffix:
     default: "MLflowModel"
     help: Model suffix, used in class names so it will look like `MyModelMLflowModel`
     when: false
+
+# Model Card Metadata Fields
+primary_contact_email:
+    type: str
+    default: ""
+    help: Primary contact email for the model
+
+repository_link:
+    type: str
+    default: ""
+    help: Repository link for the model
+
+publication_preprint_link:
+    type: str
+    default: ""
+    help: Publication or preprint link
+
+release_date:
+    type: str
+    default: ""
+    help: Model release date (YYYY-MM-DD)
+
+model_domain:
+    type: str
+    default: ""
+    help: Model domain (Imaging or Transcriptomic)
+
+model_description:
+    type: str
+    default: ""
+    help: Detailed model description
+
+short_description:
+    type: str
+    default: ""
+    help: Short model description (max 140 characters)
+
+authors:
+    type: json
+    default: []
+    help: List of authors (JSON format)
+
+licenses:
+    type: json
+    default: []
+    help: List of licenses (JSON format)
+
+compute_requirement:
+    type: str
+    default: ""
+    help: Compute requirement (GPU or CPU)
+
+system_requirement:
+    type: str
+    default: ""
+    help: System requirements description
+
+model_architecture_type:
+    type: json
+    default: []
+    help: List of model architecture types
+
+tasks_performed_by_model:
+    type: json
+    default: []
+    help: List of tasks performed by the model
+
+finetuned_from:
+    type: json
+    default: []
+    help: List of models this was finetuned from
+
+model_variants:
+    type: json
+    default: []
+    help: List of model variants
+
+training_date:
+    type: str
+    default: ""
+    help: Training date (YYYY-MM-DD)
+
+input_data_type:
+    type: json
+    default: []
+    help: List of input data types
+
+output_data_type:
+    type: json
+    default: []
+    help: List of output data types
+
+training_datasets:
+    type: json
+    default: []
+    help: List of training datasets
+
+related_models:
+    type: json
+    default: []
+    help: List of related models
+
+related_datasets:
+    type: json
+    default: []
+    help: List of related datasets
+
+quickstart_colab_link:
+    type: str
+    default: ""
+    help: Quickstart Colab notebook link
+
+tutorial_colab_link:
+    type: str
+    default: ""
+    help: Tutorial Colab notebook link
+
+model_download_link:
+    type: str
+    default: ""
+    help: Model download link
 

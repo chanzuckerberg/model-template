@@ -20,26 +20,50 @@
 #.       - Special Task Added To List
 
 ### Basic Info
+STATIC_TEST_LINE: This should always appear
 model_display_name: "{{ model_display_name }}"             
 model_version: "{{ model_version }}"               # vX.X.X or YYYY-MM-DD format
-primary_contact_email: ""
-repository_link: ""
-publication_preprint_link: ""
-release_date: ""                # YYYY-MM-DD
-model_domain: ""                # one of "Imaging" or "Transcriptomic"
-model_description: ""      
-short_description: ""           # Max 140 characters
+primary_contact_email: "{{ primary_contact_email }}"
+repository_link: "{{ repository_link }}"
+publication_preprint_link: "{{ publication_preprint_link }}"
+release_date: "{{ release_date }}"                # YYYY-MM-DD
+model_domain: "{{ model_domain }}"                # one of "Imaging" or "Transcriptomic"
+model_description: "{{ model_description }}"      
+short_description: "{{ short_description }}"           # Max 140 characters
+{% if authors %}
+authors:                        # List one or more individuals or organizations 
+{% for author in authors %}
+  - name: "{{ author.name }}"
+    type: "{{ author.type }}"                    #   one of "individual" or "organization"
+    affiliate: "{{ author.affiliate }}"               #   (optional) if it is an "individual", add an affiliated organization name        
+{% endfor %}
+{% else %}
 authors:                        # List one or more individuals or organizations 
   - name: ""
     type: ""                    #   one of "individual" or "organization"
     affiliate: ""               #   (optional) if it is an "individual", add an affiliated organization name        
+{% endif %}
+{% if licenses %}
+licenses:                       # Add one or more licenses
+{% for license in licenses %}
+  - type: "{{ license.type }}"                    #   e.g "CC BY 4.0"
+    url: "{{ license.url }}"                     #   e.g "https://creativecommons.org/licenses/by/4.0/deed.en"
+{% endfor %}
+{% else %}
 licenses:                       # Add one or more licenses
   - type: "{{ license_name }}"                    #   e.g "CC BY 4.0"
     url: ""                     #   e.g "https://creativecommons.org/licenses/by/4.0/deed.en"
-compute_requirement: ""         # one of "GPU" or "CPU"
-system_requirement: ""          # (optional) Any other system constraints or requirements you would like to describe.
+{% endif %}
+compute_requirement: "{{ compute_requirement }}"         # one of "GPU" or "CPU"
+system_requirement: "{{ system_requirement }}"          # (optional) Any other system constraints or requirements you would like to describe.
 
 ### Model Details
+{% if model_architecture_type %}
+model_architecture_type:        # Choose from any architectures or packages below and/or add onto the list
+{% for arch in model_architecture_type %}
+  - {{ arch }}
+{% endfor %}
+{% else %}
 model_architecture_type:        # Choose from any architectures or packages below and/or add onto the list
   - PyTorch
   - TensorFlow
@@ -62,6 +86,13 @@ model_architecture_type:        # Choose from any architectures or packages belo
   - timm
   - sample-factory
   - Transformers.js
+{% endif %}
+{% if tasks_performed_by_model %}
+tasks_performed_by_model:       # Choose from any tasks below and/or add onto the list
+{% for task in tasks_performed_by_model %}
+  - {{ task }}
+{% endfor %}
+{% else %}
 tasks_performed_by_model:       # Choose from any tasks below and/or add onto the list
   - Batch Correction
   - Cell Clustering
@@ -82,16 +113,40 @@ tasks_performed_by_model:       # Choose from any tasks below and/or add onto th
   - Protein Localization
   - Tomogram Alignment / Reconstruction
   - Virtual Staining
+{% endif %}
+{% if finetuned_from %}
+finetuned_from:                 # (optional) If applicable. Add one or more.
+{% for model in finetuned_from %}
+  - model_name: "{{ model.model_name }}"
+    model_url: "{{ model.model_url }}"
+{% endfor %}
+{% else %}
 finetuned_from:                 # (optional) If applicable. Add one or more.
   - model_name: ""
     model_url: ""
+{% endif %}
+{% if model_variants %}
+model_variants:                 # (optional) If applicable. Add one or more.
+{% for variant in model_variants %}
+  - variant_name: "{{ variant.variant_name }}"
+    variant_description: "{{ variant.variant_description }}"
+    variant_url: "{{ variant.variant_url }}"
+{% endfor %}
+{% else %}
 model_variants:                 # (optional) If applicable. Add one or more.
   - variant_name: ""
     variant_description: ""
     variant_url: ""
+{% endif %}
 
 ### Training Details
-training_date: ""               # (optional) YYYY-MM-DD 
+training_date: "{{ training_date }}"               # (optional) YYYY-MM-DD 
+{% if input_data_type %}
+input_data_type:                # Choose from any data types below and/or add onto the list
+{% for data_type in input_data_type %}
+  - {{ data_type }}
+{% endfor %}
+{% else %}
 input_data_type:                # Choose from any data types below and/or add onto the list
   - pdf                         
   - svg
@@ -105,12 +160,84 @@ input_data_type:                # Choose from any data types below and/or add on
   - csv
   - docx
   - txt            
+{% endif %}
+{% if output_data_type %}
+output_data_type:               # Choose from any data types below and/or add onto the list
+{% for data_type in output_data_type %}
+  - {{ data_type }}
+{% endfor %}
+{% else %}
 output_data_type:               # Choose from any data types below and/or add onto the list
   - embeddings                  
   - cell types
   - images     
+{% endif %}     
 # To gather Training Dataset data, we use the ~Cross Modality Schema~ which standardizes biological information. 
 # https://github.com/chanzuckerberg/data-guidance/blob/main/standards/cross-modality/1.1.0/schema.md
+{% if training_datasets %}
+training_datasets:               
+{% for dataset in training_datasets %}
+  - dataset_name: "{{ dataset.dataset_name }}"
+    dataset_license: "{{ dataset.dataset_license }}"
+    dataset_version: "{{ dataset.dataset_version }}"
+    dataset_url: "{{ dataset.dataset_url }}"
+    dataset_datePublished: "{{ dataset.dataset_datePublished }}"                # YYYY-MM-DD
+    dataset_collectionTimeframe: "{{ dataset.dataset_collectionTimeframe }}"          # YYYY-MM-DD/YYYY-MM-DD
+    modality: "{{ dataset.modality }}"                             # one of "Imaging" or "Transcriptomic"
+    # If modality = Transcriptomic:
+    assay_ontology_term_id: "{{ dataset.assay_ontology_term_id }}"               # e.g. "EFO:0009922" Search the Experimental Factor Ontology (https://www.ebi.ac.uk/ols4/ontologies/efo/) for dataset assay like "10x 3' v3" or "Perturb-Seq" and copy the id.
+    # If modality = Imaging
+    {% if dataset.imaging_technology %}
+    imaging_technology:                      # Choose imaging technology type from the list below and/or write in a different technology
+    {% for tech in dataset.imaging_technology %}
+      - {{ tech }}
+    {% endfor %}
+    {% else %}
+    imaging_technology:                      # Choose imaging technology type from the list below and/or write in a different technology
+      - Brightfield Microscopy
+      - Phase Contrast Microscopy
+      - Differential Interference Contrast (DIC)
+      - Fluorescence Microscopy
+      - Confocal Microscopy
+      - Spinning Disk Confocal Microscopy
+      - Two-Photon Microscopy
+      - Total Internal Reflection Fluorescence (TIRF)
+      - STED
+      - SIM
+      - PALM
+      - STORM
+      - Transmission Electron Microscopy (TEM)
+      - Scanning Electron Microscopy (SEM)
+      - Cryo-Electron Microscopy (Cryo-EM)
+      - Cryo-Electron Tomography (Cryo-ET)
+      - Imaging Mass Cytometry (IMC)
+      - Multiplexed Ion Beam Imaging (MIBI)
+      - CODEX
+      - Cyclic Immunofluorescence (CycIF)
+      - Multiplexed Immunohistochemistry (mIHC)
+      - seqFISH / MERFISH
+      - Hematoxylin & Eosin (H&E) Staining
+      - Immunohistochemistry (IHC)
+      - Immunofluorescence (IF)
+      - Whole Slide Imaging (WSI)
+      - Electron microscopy
+      - Cryo-electron microscopy
+      - Fluorescence light microscopy
+      - Transmission light microscopy
+      - Super resolution microscopy
+      - X-ray microscopy
+      - Force microscopy
+      - High-contrast microscopy
+      - Whole-slide microscopy
+    {% endif %}
+    disease_ontology_term_id: "{{ dataset.disease_ontology_term_id }}"             # e.g "PATO:0000461" for normal or healthy. Please follow these instructions for diseased and injured: https://github.com/chanzuckerberg/data-guidance/blob/main/standards/cross-modality/1.1.0/schema.md#disease_ontology_term_id
+    organism_ontology_term_id: "{{ dataset.organism_ontology_term_id }}"            # e.g. "NCBITaxon:9606" for Human. Please follow these instructions: https://github.com/chanzuckerberg/data-guidance/blob/main/standards/cross-modality/1.1.0/schema.md#organism_ontology_term_id
+    development_stage_ontology_term_id: "{{ dataset.development_stage_ontology_term_id }}"   # Please follow these instructions: https://github.com/chanzuckerberg/data-guidance/blob/main/standards/cross-modality/1.1.0/schema.md#development_stage_ontology_term_id
+    tissue_type: "{{ dataset.tissue_type }}"                          # one of "tissue", "organoid", "cell culture", "cell line" or "organelle"
+    tissue_ontology_term_id: "{{ dataset.tissue_ontology_term_id }}"              # Please follow these instructions: https://github.com/chanzuckerberg/data-guidance/blob/main/standards/cross-modality/1.1.0/schema.md#tissue_ontology_term_id
+    num_of_cells: "{{ dataset.num_of_cells }}"                         # e.g. "1000000"
+{% endfor %}
+{% else %}
 training_datasets:               
   - dataset_name: ""
     dataset_license: ""
@@ -164,16 +291,33 @@ training_datasets:
     tissue_type: ""                          # one of "tissue", "organoid", "cell culture", "cell line" or "organelle"
     tissue_ontology_term_id: ""              # Please follow these instructions: https://github.com/chanzuckerberg/data-guidance/blob/main/standards/cross-modality/1.1.0/schema.md#tissue_ontology_term_id
     num_of_cells: ""                         # e.g. "1000000"   
+{% endif %}   
 
 
 ### Other Resources
+{% if related_models %}
+related_models:                 # (optional) Link any other models your model should be associated with.
+{% for model in related_models %}
+  - model_name: "{{ model.model_name }}"
+    model_url: "{{ model.model_url }}"
+{% endfor %}
+{% else %}
 related_models:                 # (optional) Link any other models your model should be associated with.
   - model_name: ""
     model_url: ""
+{% endif %}
+{% if related_datasets %}
+related_datasets:               # (optional) Link any other datasets your model should be associated with.
+{% for dataset in related_datasets %}
+  - dataset_name: "{{ dataset.dataset_name }}"
+    dataset_url: "{{ dataset.dataset_url }}" 
+{% endfor %}
+{% else %}
 related_datasets:               # (optional) Link any other datasets your model should be associated with.
   - dataset_name: ""
     dataset_url: "" 
+{% endif %}
 # See the Model Contribution Docs for detailed instructions on providing a Quickstart and Tutorial link: https://chanzuckerberg.github.io/virtual-cells-platform/ 
-quickstart_colab_link: ""       # template -> https://colab.research.google.com/drive/1VfrAM-BxXwUveDqhdwViD8BOH5yk_FU6
-tutorial_colab_link: ""         # (optional but encouraged) template -> https://colab.research.google.com/drive/1DrRY_mJyYkx3Bg-Y9Ev9X209jGwt8wVF?usp=sharing
-model_download_link: ""         # e.g. s3://.. (not needed if model is packaged in MLFlow) 
+quickstart_colab_link: "{{ quickstart_colab_link }}"       # template -> https://colab.research.google.com/drive/1VfrAM-BxXwUveDqhdwViD8BOH5yk_FU6
+tutorial_colab_link: "{{ tutorial_colab_link }}"         # (optional but encouraged) template -> https://colab.research.google.com/drive/1DrRY_mJyYkx3Bg-Y9Ev9X209jGwt8wVF?usp=sharing
+model_download_link: "{{ model_download_link }}"         # e.g. s3://.. (not needed if model is packaged in MLFlow) 
