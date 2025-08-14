@@ -24,11 +24,6 @@ license_name:
     - Apache2
   default: MIT
 
-test_field:
-  type: str
-  default: "TEST_VALUE_FROM_COPIER"
-  help: Test field to verify copier is working
-
 model_name_slug:
     type: str
     default: "{{ model_display_name | trim | lower | replace(' ', '_') | replace('-', '_') }}"
