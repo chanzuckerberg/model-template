@@ -180,6 +180,7 @@ output_data_type:               # Choose from any data types below and/or add on
 # To gather Training Dataset data, we use the ~Cross Modality Schema~ which standardizes biological information. 
 # https://github.com/chanzuckerberg/data-guidance/blob/main/standards/cross-modality/1.1.0/schema.md
 {%- if training_datasets %}
+
 training_datasets:
 {%- for dataset in training_datasets %}
   - dataset_name: "{{ dataset.dataset_name }}"
@@ -254,6 +255,7 @@ training_datasets:
     num_of_cells: "{{ dataset.num_of_cells }}"                         # Enter an approximate number e.g. 1000000
 {%- endfor -%}
 {%- else %}
+
 training_datasets:
   - dataset_name: ""
     dataset_licenses: 
