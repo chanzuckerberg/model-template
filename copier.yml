@@ -262,6 +262,11 @@ evaluation_results:
     help: Evaluation results data
     when: "{{ not interactive_mode }}"
 
+evaluation_datasets:
+    type: str
+    default: ""
+    help: Evaluation datasets
+    when: "{{ not interactive_mode }}"
 
 out_of_scope_uses:
     type: str
