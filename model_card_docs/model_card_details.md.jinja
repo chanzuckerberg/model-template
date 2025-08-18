@@ -16,12 +16,12 @@ Write descriptive alt text that explains what's in the image for screen readers.
 ### Model Architecture
 <!-- Brief description of the model architecture (e.g., number of layers and attention heads, embedding dimensions, input size or context length) and rationale behind it -->
 
-{{ model_architecture_description | default('...') }}
+{{ architecture_details | default('...') }}
 
 ### Parameters
 <!-- Number of parameters (e.g., 15 million) -->
 
-{{ model_parameters | default('...') }}
+{{ parameters_count | default('...') }}
 
 ### Citation
 <!-- Provide citation information for users of the model -->
@@ -50,7 +50,7 @@ Write descriptive alt text that explains what's in the image for screen readers.
 [Please include other specific out-of-scope use cases that may be relevant for this model, as applicable]
 -->
 
-{{ out_of_scope_use_cases | default('...') }}
+{{ out_of_scope_uses | default('...') }}
 
 <!-- TRAINING DETAILS SECTION -->
 
@@ -67,12 +67,12 @@ Write descriptive alt text that explains what's in the image for screen readers.
 ### Training Code
 <!-- (optional, but strongly encouraged) Provide links to training scripts -->
 
-{{ training_code_links | default('...') }}
+{{ training_code | default('...') }}
 
 ### Speeds, Sizes, Times
 <!-- (optional, include if available) Provide information about throughput, start/end time, checkpoint size if relevant, etc. (optional, include if available) -->
 
-{{ training_speeds_sizes_times | default('...') }}
+{{ training_duration | default('...') }}
 
 ### Training Hyperparameters
 <!-- (optional, include if available) Examples: fp32, fp16 mixed precision, bf16 mixed precision, bf16 non-mixed precision, fp16 non-mixed precision, fp8 mixed precision  -->
@@ -154,7 +154,7 @@ For CZI and CZ Biohub models:
 [Please include other recommendations that may be relevant for users of this model, as applicable]
 -->
 
-{{ caveats_and_recommendations | default('...') }}
+{{ recommendations | default('...') }}
 
 <!-- ACKNOWLEDGEMENTS -->
 

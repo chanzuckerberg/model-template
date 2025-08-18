@@ -194,3 +194,107 @@ model_download_link:
     help: Model download link
     when: "{{ not interactive_mode }}"
 
+model_card_additional_fields:
+    type: json
+    default: {}
+    help: Additional fields for model card markdown generation
+    when: "{{ not interactive_mode }}"
+
+  # Individual fields for easier template access
+parameters_count:
+    type: str
+    default: ""
+    help: Number of model parameters (e.g., '15 million')
+    when: "{{ not interactive_mode }}"
+
+model_citation:
+    type: str   
+    default: ""
+    help: How you would like the model to be cited
+    when: "{{ not interactive_mode }}"
+
+primary_use_cases:
+    type: str   
+    default: ""
+    help: Primary Use cases and tasks
+    when: "{{ not interactive_mode }}"
+
+
+architecture_details:
+    type: str
+    default: ""
+    help: Detailed architecture description
+    when: "{{ not interactive_mode }}"
+
+training_procedure:
+    type: str
+    default: ""
+    help: Description of training procedure
+    when: "{{ not interactive_mode }}"
+
+training_code:
+    type: str
+    default: ""
+    help: Link to training code
+    when: "{{ not interactive_mode }}"
+
+training_duration:
+    type: str
+    default: ""
+    help: Training duration description
+    when: "{{ not interactive_mode }}"
+
+training_hyperparameters:
+    type: str
+    default: ""
+    help: Training hyperparameters (JSON format)
+    when: "{{ not interactive_mode }}"
+
+evaluation_metrics:
+    type: str
+    default: ""
+    help: List of evaluation metrics used
+    when: "{{ not interactive_mode }}"
+
+evaluation_results:
+    type: str
+    default: ""
+    help: Evaluation results data
+    when: "{{ not interactive_mode }}"
+
+
+out_of_scope_uses:
+    type: str
+    default: ""
+    help: Describe of out-of-scope use cases
+    when: "{{ not interactive_mode }}"
+
+potential_biases:
+    type: str
+    default: ""
+    help: List of potential biases
+    when: "{{ not interactive_mode }}"
+
+risks:
+    type: str
+    default: ""
+    help: List of risks
+    when: "{{ not interactive_mode }}"
+
+limitations:
+    type: str
+    default: ""
+    help: List of limitations
+    when: "{{ not interactive_mode }}"
+
+recommendations:
+    type: str
+    default: ""
+    help: List of recommendations
+    when: "{{ not interactive_mode }}"
+
+acknowledgements:
+    type: str
+    default: ""
+    help: List of acknowledgements
+    when: "{{ not interactive_mode }}"
