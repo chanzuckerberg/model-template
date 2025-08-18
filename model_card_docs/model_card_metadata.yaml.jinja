@@ -1,4 +1,4 @@
-### Model Card Details Template
+### Model Card Template - Metadata
 
 # How to use this YAML file:
 # Fill in your information within the quotations ("") e.g. model_display_name: "ModelX"  
@@ -26,9 +26,9 @@ primary_contact_email: "{{ primary_contact_email }}"
 repository_link: "{{ repository_link }}"
 publication_preprint_link: "{{ publication_preprint_link }}"
 release_date: "{{ release_date }}"                # YYYY-MM-DD
-model_domain: "{{ model_domain }}"                # one of "Imaging" or "Transcriptomic"
+model_domain: "{{ model_domain }}"                # one of "Imaging" or "Transcriptomic" or "Text"
 model_description: "{{ model_description }}"      
-short_description: "{{ short_description }}"           # Max 140 characters
+short_description: "{{ short_description }}"           # Max 160 characters
 {% if authors %}
 authors:                        # List one or more individuals or organizations 
 {% for author in authors %}
@@ -54,7 +54,7 @@ licenses:                       # Add one or more licenses
     url: ""                     #   e.g "https://creativecommons.org/licenses/by/4.0/deed.en"
 {% endif %}
 compute_requirement: "{{ compute_requirement }}"         # one of "GPU" or "CPU"
-system_requirement: "{{ system_requirement }}"          # (optional) Any other system constraints or requirements you would like to describe.
+system_requirements: "{{ system_requirements }}"         # (optional) Any other system constraints or requirements you would like to describe.
 
 ### Model Details
 {% if model_architecture_type %}
@@ -106,9 +106,13 @@ tasks_performed_by_model:       # Choose from any tasks below and/or add onto th
   - Differential Expression
   - Feature Extraction
   - Frame Alignment & Motion Correction
+  - Gene Co-expression Prediction
   - Gene Network Inference
+  - Hypothesis Generation
+  - Image Segmentation
   - Imputation
   - Perturbation Detection/Prediction
+  - Synthetic Data Generation
   - Protein Localization
   - Tomogram Alignment / Reconstruction
   - Virtual Staining
@@ -139,7 +143,9 @@ model_variants:                 # (optional) If applicable. Add one or more.
 {% endif %}
 
 ### Training Details
-training_date: "{{ training_date }}"               # (optional) YYYY-MM-DD 
+training_date: "{{ training_date }}"                 # (optional) YYYY-MM-DD 
+uses_synthetic_data: "{{ uses_synthetic_data }}"           # one of "Yes" or "No". Was synthetic data used in developing the model?
+uses_purchased_licensed_data: "{{ uses_purchased_licensed_data }}"  # one of "Yes" or "No". Were any datasets used for model training purchased or licensed? 
 {% if input_data_type %}
 input_data_type:                # Choose from any data types below and/or add onto the list
 {% for data_type in input_data_type %}
@@ -177,22 +183,33 @@ output_data_type:               # Choose from any data types below and/or add on
 training_datasets:               
 {% for dataset in training_datasets %}
   - dataset_name: "{{ dataset.dataset_name }}"
-    dataset_license: "{{ dataset.dataset_license }}"
+    dataset_licenses: 
+{% if dataset.dataset_licenses %}
+{% for license in dataset.dataset_licenses %}
+      - type: "{{ license.type }}"                    #   e.g "CC BY 4.0"
+        url: "{{ license.url }}"                     #   e.g "https://creativecommons.org/licenses/by/4.0/deed.en"
+{% endfor %}
+{% else %}
+      - type: ""                    #   e.g "CC BY 4.0"
+        url: ""                     #   e.g "https://creativecommons.org/licenses/by/4.0/deed.en"
+{% endif %}
     dataset_version: "{{ dataset.dataset_version }}"
     dataset_url: "{{ dataset.dataset_url }}"
-    dataset_datePublished: "{{ dataset.dataset_datePublished }}"                # YYYY-MM-DD
-    dataset_collectionTimeframe: "{{ dataset.dataset_collectionTimeframe }}"          # YYYY-MM-DD/YYYY-MM-DD
-    modality: "{{ dataset.modality }}"                             # one of "Imaging" or "Transcriptomic"
+    dataset_date_published: "{{ dataset.dataset_date_published }}"               # YYYY-MM-DD
+    dataset_collection_timeframe: "{{ dataset.dataset_collection_timeframe }}"         # YYYY-MM/YYYY-MM
+    dataset_first_used_in_model_dev: "{{ dataset.dataset_first_used_in_model_dev }}"      # YYYY-MM When was the dataset first used during model development?
+    includes_consumer_info: "{{ dataset.includes_consumer_info }}"               # one of "Yes" or "No". Does the dataset include any aggregate consumer information?
+    modality: "{{ dataset.modality }}"                             # one of "Imaging" or "Transcriptomic" or "Text"
     # If modality = Transcriptomic:
     assay_ontology_term_id: "{{ dataset.assay_ontology_term_id }}"               # e.g. "EFO:0009922" Search the Experimental Factor Ontology (https://www.ebi.ac.uk/ols4/ontologies/efo/) for dataset assay like "10x 3' v3" or "Perturb-Seq" and copy the id.
     # If modality = Imaging
-    {% if dataset.imaging_technology %}
-    imaging_technology:                      # Choose imaging technology type from the list below and/or write in a different technology
-    {% for tech in dataset.imaging_technology %}
+    {% if dataset.imaging_technologies %}
+    imaging_technologies:                    # Choose imaging technology types from the list below and/or write in a different technology
+    {% for tech in dataset.imaging_technologies %}
       - {{ tech }}
     {% endfor %}
     {% else %}
-    imaging_technology:                      # Choose imaging technology type from the list below and/or write in a different technology
+    imaging_technologies:                    # Choose imaging technology types from the list below and/or write in a different technology
       - Brightfield Microscopy
       - Phase Contrast Microscopy
       - Differential Interference Contrast (DIC)
@@ -234,21 +251,25 @@ training_datasets:
     development_stage_ontology_term_id: "{{ dataset.development_stage_ontology_term_id }}"   # Please follow these instructions: https://github.com/chanzuckerberg/data-guidance/blob/main/standards/cross-modality/1.1.0/schema.md#development_stage_ontology_term_id
     tissue_type: "{{ dataset.tissue_type }}"                          # one of "tissue", "organoid", "cell culture", "cell line" or "organelle"
     tissue_ontology_term_id: "{{ dataset.tissue_ontology_term_id }}"              # Please follow these instructions: https://github.com/chanzuckerberg/data-guidance/blob/main/standards/cross-modality/1.1.0/schema.md#tissue_ontology_term_id
-    num_of_cells: "{{ dataset.num_of_cells }}"                         # e.g. "1000000"
+    num_of_cells: "{{ dataset.num_of_cells }}"                         # Enter an approximate number e.g. 1000000
 {% endfor %}
 {% else %}
-training_datasets:               
+training_datasets:                          
   - dataset_name: ""
-    dataset_license: ""
+    dataset_licenses: 
+      - type: ""                    #   e.g "CC BY 4.0"
+        url: ""                     #   e.g "https://creativecommons.org/licenses/by/4.0/deed.en"
     dataset_version: ""
     dataset_url: ""
-    dataset_datePublished: ""                # YYYY-MM-DD
-    dataset_collectionTimeframe: ""          # YYYY-MM-DD/YYYY-MM-DD
-    modality: ""                             # one of "Imaging" or "Transcriptomic"
+    dataset_date_published: ""               # YYYY-MM-DD
+    dataset_collection_timeframe: ""         # YYYY-MM/YYYY-MM
+    dataset_first_used_in_model_dev: ""      # YYYY-MM When was the dataset first used during model development?
+    includes_consumer_info: ""               # one of "Yes" or "No". Does the dataset include any aggregate consumer information?
+    modality: ""                             # one of "Imaging" or "Transcriptomic" or "Text"
     # If modality = Transcriptomic:
     assay_ontology_term_id: ""               # e.g. "EFO:0009922" Search the Experimental Factor Ontology (https://www.ebi.ac.uk/ols4/ontologies/efo/) for dataset assay like "10x 3' v3" or "Perturb-Seq" and copy the id.
     # If modality = Imaging
-    imaging_technology:                      # Choose imaging technology type from the list below and/or write in a different technology
+    imaging_technologies:                    # Choose imaging technology types from the list below and/or write in a different technology
       - Brightfield Microscopy
       - Phase Contrast Microscopy
       - Differential Interference Contrast (DIC)
@@ -289,7 +310,7 @@ training_datasets:
     development_stage_ontology_term_id: ""   # Please follow these instructions: https://github.com/chanzuckerberg/data-guidance/blob/main/standards/cross-modality/1.1.0/schema.md#development_stage_ontology_term_id
     tissue_type: ""                          # one of "tissue", "organoid", "cell culture", "cell line" or "organelle"
     tissue_ontology_term_id: ""              # Please follow these instructions: https://github.com/chanzuckerberg/data-guidance/blob/main/standards/cross-modality/1.1.0/schema.md#tissue_ontology_term_id
-    num_of_cells: ""                         # e.g. "1000000"   
+    num_of_cells: ""                         # Enter an approximate number e.g. 1000000   
 {% endif %}   
 
 

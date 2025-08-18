@@ -16,17 +16,17 @@ Write descriptive alt text that explains what's in the image for screen readers.
 ### Model Architecture
 <!-- Brief description of the model architecture (e.g., number of layers and attention heads, embedding dimensions, input size or context length) and rationale behind it -->
 
-...
+{{ model_architecture_description | default('...') }}
 
 ### Parameters
 <!-- Number of parameters (e.g., 15 million) -->
 
-...
+{{ model_parameters | default('...') }}
 
 ### Citation
 <!-- Provide citation information for users of the model -->
 
-...
+{{ model_citation | default('...') }}
 
 <!-- INTENDED USE SECTION -->
 
@@ -36,7 +36,7 @@ Write descriptive alt text that explains what's in the image for screen readers.
 ### Primary Use Cases
 <!-- List primary use cases (e.g., cell type classification, perturbation prediction, protein localization, cell morphology profiling). You can include the 'tasks_performed_by_model' that you provided in model_card_details.yaml as a starting point.  -->
 
-...
+{{ primary_use_cases | default('...') }}
 
 ### Out-of-Scope or Unauthorized Use Cases
 <!-- Suggested Text:
@@ -50,34 +50,34 @@ Write descriptive alt text that explains what's in the image for screen readers.
 [Please include other specific out-of-scope use cases that may be relevant for this model, as applicable]
 -->
 
-...
+{{ out_of_scope_use_cases | default('...') }}
 
 <!-- TRAINING DETAILS SECTION -->
 
 ## Training Details
 <!-- This section provides information to describe and replicate training, including the training data and the speed and size of training elements. -->
 
-...
+{{ training_details_overview | default('...') }}
 
 ### Training Procedure
 <!-- Briefly describe the training approach including data pre-processing steps (e.g., steps taken to clean and preprocess the data, detail tokenization, modality dependent resizing/rewriting) -->
 
-...
+{{ training_procedure | default('...') }}
 
 ### Training Code
 <!-- (optional, but strongly encouraged) Provide links to training scripts -->
 
-...
+{{ training_code_links | default('...') }}
 
 ### Speeds, Sizes, Times
 <!-- (optional, include if available) Provide information about throughput, start/end time, checkpoint size if relevant, etc. (optional, include if available) -->
 
-...
+{{ training_speeds_sizes_times | default('...') }}
 
 ### Training Hyperparameters
 <!-- (optional, include if available) Examples: fp32, fp16 mixed precision, bf16 mixed precision, bf16 non-mixed precision, fp16 non-mixed precision, fp8 mixed precision  -->
 
-...
+{{ training_hyperparameters | default('...') }}
 
 <!-- PERFORMANCE METRICS SECTION -->
 
@@ -91,17 +91,17 @@ For example:
 "The model was evaluated using a range of benchmarks to measure its performance.
 Key metrics include: [metrics]." -->
 
-...
+{{ evaluation_metrics | default('...') }}
 
 ### Evaluation Datasets
 <!-- List the evaluation datasets along with links to the data where possible. Link to evaluation datasets processing code if available. -->
 
-...
+{{ evaluation_datasets | default('...') }}
 
 ### Evaluation Results
 <!-- Provide table and/or figures summarizing evaluation results -->
 
-...
+{{ evaluation_results | default('...') }}
 
 <!-- BIASES, RISKS, AND LIMITATIONS SECTION -->
 
@@ -117,7 +117,7 @@ information on warnings and potential mitigations. Suggestions are provided belo
 
 [Please include other specific biases that may be relevant for this model, as applicable] -->
 
-...
+{{ potential_biases | default('...') }}
 
 ### Risks
 <!-- Suggested Text:
@@ -128,7 +128,7 @@ information on warnings and potential mitigations. Suggestions are provided belo
 
 [Please include other specific risks that may be relevant for this model, as applicable] -->
 
-...
+{{ risks | default('...') }}
 
 ### Limitations
 <!--
@@ -139,7 +139,7 @@ Suggested Text:
 [Please include other specific limitations that may be relevant for this model, as applicable]
 -->
 
-...
+{{ limitations | default('...') }}
 
 ### Caveats and Recommendations
 <!-- (optional)
@@ -154,11 +154,11 @@ For CZI and CZ Biohub models:
 [Please include other recommendations that may be relevant for users of this model, as applicable]
 -->
 
-...
+{{ caveats_and_recommendations | default('...') }}
 
 <!-- ACKNOWLEDGEMENTS -->
 
 ## Acknowledgements
 <!-- (optional) This section is for providing acknowledgement of other contributors or supporting organizations. -->
 
-...
+{{ acknowledgements | default('...') }}
