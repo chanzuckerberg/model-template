@@ -2,7 +2,14 @@ _exclude:
     - licenses
     - .git
 
-# questions
+# Control variable to determine interactive vs data-file mode
+interactive_mode:
+    type: bool
+    default: true
+    help: Use interactive mode (false when data file provided)
+    when: false
+
+# Basic questions (always asked in interactive mode)
 model_display_name:
     type: str
     help: What is your model name?
@@ -42,3 +49,257 @@ model_class_suffix:
     help: Model suffix, used in class names so it will look like `MyModelMLflowModel`
     when: false
 
+# Enhanced Model Card Metadata Fields (only shown when data file provided)
+primary_contact_email:
+    type: str
+    default: ""
+    help: Primary contact email for the model
+    when: "{{ not interactive_mode }}"
+
+repository_link:
+    type: str
+    default: ""
+    help: Repository link for the model
+    when: "{{ not interactive_mode }}"
+
+publication_preprint_link:
+    type: str
+    default: ""
+    help: Publication or preprint link
+    when: "{{ not interactive_mode }}"
+
+release_date:
+    type: str
+    default: ""
+    help: Model release date (YYYY-MM-DD)
+    when: "{{ not interactive_mode }}"
+
+model_domain:
+    type: str
+    default: ""
+    help: Model domain (Imaging or Transcriptomic)
+    when: "{{ not interactive_mode }}"
+
+model_description:
+    type: str
+    default: ""
+    help: Detailed model description
+    when: "{{ not interactive_mode }}"
+
+short_description:
+    type: str
+    default: ""
+    help: Short model description (max 140 characters)
+    when: "{{ not interactive_mode }}"
+
+authors:
+    type: json
+    default: []
+    help: List of authors (JSON format)
+    when: "{{ not interactive_mode }}"
+
+licenses:
+    type: json
+    default: []
+    help: List of licenses (JSON format)
+    when: "{{ not interactive_mode }}"
+
+compute_requirement:
+    type: str
+    default: ""
+    help: Compute requirement (GPU or CPU)
+    when: "{{ not interactive_mode }}"
+
+system_requirement:
+    type: str
+    default: ""
+    help: System requirements description
+    when: "{{ not interactive_mode }}"
+
+model_architecture_type:
+    type: json
+    default: []
+    help: List of model architecture types
+    when: "{{ not interactive_mode }}"
+
+tasks_performed_by_model:
+    type: json
+    default: []
+    help: List of tasks performed by the model
+    when: "{{ not interactive_mode }}"
+
+finetuned_from:
+    type: json
+    default: []
+    help: List of models this was finetuned from
+    when: "{{ not interactive_mode }}"
+
+model_variants:
+    type: json
+    default: []
+    help: List of model variants
+    when: "{{ not interactive_mode }}"
+
+training_date:
+    type: str
+    default: ""
+    help: Training date (YYYY-MM-DD)
+    when: "{{ not interactive_mode }}"
+
+input_data_type:
+    type: json
+    default: []
+    help: List of input data types
+    when: "{{ not interactive_mode }}"
+
+output_data_type:
+    type: json
+    default: []
+    help: List of output data types
+    when: "{{ not interactive_mode }}"
+
+training_datasets:
+    type: json
+    default: []
+    help: List of training datasets
+    when: "{{ not interactive_mode }}"
+
+related_models:
+    type: json
+    default: []
+    help: List of related models
+    when: "{{ not interactive_mode }}"
+
+related_datasets:
+    type: json
+    default: []
+    help: List of related datasets
+    when: "{{ not interactive_mode }}"
+
+quickstart_colab_link:
+    type: str
+    default: ""
+    help: Quickstart Colab notebook link
+    when: "{{ not interactive_mode }}"
+
+tutorial_colab_link:
+    type: str
+    default: ""
+    help: Tutorial Colab notebook link
+    when: "{{ not interactive_mode }}"
+
+model_download_link:
+    type: str
+    default: ""
+    help: Model download link
+    when: "{{ not interactive_mode }}"
+
+model_card_additional_fields:
+    type: json
+    default: {}
+    help: Additional fields for model card markdown generation
+    when: "{{ not interactive_mode }}"
+
+  # Individual fields for easier template access
+parameters_count:
+    type: str
+    default: ""
+    help: Number of model parameters (e.g., '15 million')
+    when: "{{ not interactive_mode }}"
+
+model_citation:
+    type: str   
+    default: ""
+    help: How you would like the model to be cited
+    when: "{{ not interactive_mode }}"
+
+primary_use_cases:
+    type: str   
+    default: ""
+    help: Primary Use cases and tasks
+    when: "{{ not interactive_mode }}"
+
+
+architecture_details:
+    type: str
+    default: ""
+    help: Detailed architecture description
+    when: "{{ not interactive_mode }}"
+
+training_procedure:
+    type: str
+    default: ""
+    help: Description of training procedure
+    when: "{{ not interactive_mode }}"
+
+training_code:
+    type: str
+    default: ""
+    help: Link to training code
+    when: "{{ not interactive_mode }}"
+
+training_duration:
+    type: str
+    default: ""
+    help: Training duration description
+    when: "{{ not interactive_mode }}"
+
+training_hyperparameters:
+    type: str
+    default: ""
+    help: Training hyperparameters (JSON format)
+    when: "{{ not interactive_mode }}"
+
+evaluation_metrics:
+    type: str
+    default: ""
+    help: List of evaluation metrics used
+    when: "{{ not interactive_mode }}"
+
+evaluation_results:
+    type: str
+    default: ""
+    help: Evaluation results data
+    when: "{{ not interactive_mode }}"
+
+evaluation_datasets:
+    type: str
+    default: ""
+    help: Evaluation datasets
+    when: "{{ not interactive_mode }}"
+
+out_of_scope_uses:
+    type: str
+    default: ""
+    help: Describe of out-of-scope use cases
+    when: "{{ not interactive_mode }}"
+
+potential_biases:
+    type: str
+    default: ""
+    help: List of potential biases
+    when: "{{ not interactive_mode }}"
+
+risks:
+    type: str
+    default: ""
+    help: List of risks
+    when: "{{ not interactive_mode }}"
+
+limitations:
+    type: str
+    default: ""
+    help: List of limitations
+    when: "{{ not interactive_mode }}"
+
+recommendations:
+    type: str
+    default: ""
+    help: List of recommendations
+    when: "{{ not interactive_mode }}"
+
+acknowledgements:
+    type: str
+    default: ""
+    help: List of acknowledgements
+    when: "{{ not interactive_mode }}"

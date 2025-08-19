@@ -1,0 +1,146 @@
+{
+  "model_display_name": "Cell Segmentation Transformer",
+  "model_version": "v2.1.0",
+  "license_name": "MIT",
+  "primary_contact_email": "researcher@example.org",
+  "repository_link": "https://github.com/example/cell-segmentation-transformer",
+  "publication_preprint_link": "https://arxiv.org/abs/2024.12345",
+  "release_date": "2024-01-15",
+  "model_domain": "Imaging",
+  "model_description": "A transformer-based model for automated cell segmentation in microscopy images. Uses attention mechanisms to identify cell boundaries and classify cell types with high accuracy across multiple imaging modalities.",
+  "short_description": "Transformer model for automated cell segmentation and classification in microscopy images.",
+  "authors": [
+    {
+      "name": "Dr. Jane Smith",
+      "type": "individual",
+      "affiliate": "Chan Zuckerberg Initiative"
+    },
+    {
+      "name": "Computational Biology Lab",
+      "type": "organization",
+      "affiliate": ""
+    }
+  ],
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  ],
+  "compute_requirement": "GPU",
+  "system_requirement": "CUDA 11.8+, 16GB GPU memory recommended",
+  "model_architecture_type": ["PyTorch", "Transformers", "ONNX"],
+  "tasks_performed_by_model": ["Cell Clustering", "Cell Type Classification", "Feature Extraction"],
+  "finetuned_from": [
+    {
+      "model_name": "Vision Transformer Base",
+      "model_url": "https://huggingface.co/google/vit-base-patch16-224"
+    }
+  ],
+  "model_variants": [
+    {
+      "variant_name": "cell-seg-transformer-small",
+      "variant_description": "Lightweight version for CPU inference",
+      "variant_url": "https://example.com/models/cell-seg-small"
+    },
+    {
+      "variant_name": "cell-seg-transformer-large",
+      "variant_description": "High-accuracy version with increased model capacity",
+      "variant_url": "https://example.com/models/cell-seg-large"
+    },
+    {
+      "variant_name": "cell-seg-transformer-quantized",
+      "variant_description": "Optimized 8-bit quantized model for edge deployment",
+      "variant_url": "https://example.com/models/cell-seg-quantized"
+    }
+  ],
+  "training_date": "2023-11-20",
+  "uses_synthetic_data": "No",
+  "uses_purchased_licensed_data": "No",
+  "input_data_type": ["tiff", "png", "zarr"],
+  "output_data_type": ["cell types", "images"],
+  "training_datasets": [
+    {
+      "dataset_name": "CellPose Training Dataset",
+      "dataset_licenses": [
+        {
+          "type": "CC BY 4.0",
+          "url": "https://creativecommons.org/licenses/by/4.0/deed.en"
+        }
+      ],
+      "dataset_version": "v1.2.0",
+      "dataset_url": "https://example.com/datasets/cellpose-training",
+      "dataset_date_published": "2023-06-15",
+      "dataset_collection_timeframe": "2022-01/2023-05",
+      "dataset_first_used_in_model_dev": "2023-07",
+      "includes_consumer_info": "No",
+      "modality": "Imaging",
+      "assay_ontology_term_id": "",
+      "imaging_technologies": ["Fluorescence Microscopy", "Confocal Microscopy"],
+      "disease_ontology_term_id": "PATO:0000461",
+      "organism_ontology_term_id": "NCBITaxon:9606",
+      "development_stage_ontology_term_id": "HsapDv:0000087",
+      "tissue_type": "cell culture",
+      "tissue_ontology_term_id": "CL:0000000",
+      "num_of_cells": "50000"
+    },
+    {
+      "dataset_name": "Multi-Modal Cell Atlas",
+      "dataset_licenses": [
+        {
+          "type": "CC BY-SA 4.0",
+          "url": "https://creativecommons.org/licenses/by-sa/4.0/deed.en"
+        }
+      ],
+      "dataset_version": "v2.1.0",
+      "dataset_url": "https://example.com/datasets/multi-modal-cell-atlas",
+      "dataset_date_published": "2023-09-10",
+      "dataset_collection_timeframe": "2022-06/2023-08",
+      "dataset_first_used_in_model_dev": "2023-10",
+      "includes_consumer_info": "No",
+      "modality": "Imaging",
+      "assay_ontology_term_id": "",
+      "imaging_technologies": ["Confocal Microscopy", "Super resolution microscopy", "Fluorescence Microscopy"],
+      "disease_ontology_term_id": "PATO:0000461",
+      "organism_ontology_term_id": "NCBITaxon:10090",
+      "development_stage_ontology_term_id": "MmusDv:0000087",
+      "tissue_type": "tissue",
+      "tissue_ontology_term_id": "UBERON:0002107",
+      "num_of_cells": "125000"
+    }
+  ],
+  "related_models": [
+    {
+      "model_name": "CellPose 2.0",
+      "model_url": "https://github.com/MouseLand/cellpose"
+    }
+  ],
+  "related_datasets": [
+    {
+      "dataset_name": "Live Cell Imaging Dataset",
+      "dataset_url": "https://example.com/datasets/live-cell-imaging"
+    }
+  ],
+  "quickstart_colab_link": "https://colab.research.google.com/drive/1VfrAM-BxXwUveDqhdwViD8BOH5yk_FU6",
+  "tutorial_colab_link": "https://colab.research.google.com/drive/1DrRY_mJyYkx3Bg-Y9Ev9X209jGwt8wVF",
+  "model_download_link": "s3://vcp-models/cell-segmentation-transformer/v2.1.0",
+  "model_card_additional_fields": {},
+  "parameters_count": "15 million",
+  "model_citation": "Smith, J. et al. (2024). Cell Segmentation Transformer: Automated cell boundary detection using attention mechanisms. arXiv preprint arXiv:2024.12345.",
+  "primary_use_cases": "- **Cell Clustering**: Grouping similar cells based on morphological features\n- **Cell Type Classification**: Automated identification and classification of different cell types\n- **Feature Extraction**: Extracting relevant features from microscopy images for downstream analysis",
+  "architecture_details": "The model builds on a modified transformer backbone with attention mechanisms to identify cell boundaries and classify cell types. Uses domain-specific embeddings for enhanced representation learning with 12 transformer layers, 8 attention heads, and 768 embedding dimensions. ![Descriptive alt text for placeholder image](./model_card_images/placeholder.png)",
+  "training_details": "The Cell Segmentation Transformer was fine-tuned on curated microscopy datasets with careful preprocessing and augmentation strategies. Training was conducted using modern optimization techniques with mixed precision for efficiency. The model was trained for 20 epochs with early stopping based on validation performance.",
+  "training_procedure": "Fine-tuning conducted on train splits using a standard recipe with data preprocessing including normalization and augmentation. Images were resized to 224x224 pixels and normalized using ImageNet statistics. Data augmentation included random rotations, flips, and brightness adjustments.",
+  "training_code": "https://github.com/example/cell-segmentation-transformer/tree/main/training",
+  "training_duration": "~90 hours training on single A100 GPU for 20 epochs",
+  "training_hyperparameters": "- **Optimizer**: Adam\n- **Learning Rate**: 1e-4\n- **Scheduler**: StepLR (gamma = 0.9)\n- **Batch Size**: 64\n- **Dropout**: 0.2\n- **Number of Epochs**: 20\n- **Precision**: fp16 mixed precision",
+  "evaluation_metrics": "F1 macro score, Accuracy, Precision, Recall",
+  "evaluation_results": "| Dataset | F1 Score | Accuracy | Precision | Recall |\n|---------|----------|----------|-----------|--------|\n| CellPose Test Set | 0.92 | 0.94 | 0.91 | 0.93 |\n| Live Cell Dataset | 0.88 | 0.90 | 0.87 | 0.89 |",
+  "evaluation_datasets": "- **[CellPose Test Set](https://example.com/datasets/cellpose-test)** (v1.2.0): Hold-out test split from CellPose training dataset used for model evaluation\n- **[Live Cell Imaging Evaluation Dataset](https://example.com/datasets/live-cell-eval)** (v1.0.0): Independent evaluation dataset with live cell microscopy images",
+  "out_of_scope_uses": "- Clinical diagnosis or medical decision making\n- Analysis of non-microscopy images\n- Real-time processing applications\n- Use on significantly different cell types not present in training data",
+  "potential_biases": "- The model may reflect biases present in the training data\n- Certain cell types may be underrepresented in training data\n- Performance may vary across different imaging modalities\n- Bias towards specific imaging conditions used during training",
+  "risks": "- Inaccurate outputs or hallucinations in edge cases\n- Potential misuse for incorrect biological interpretations\n- Model may not generalize well to significantly different imaging conditions\n- Risk of over-reliance on automated predictions without validation",
+  "limitations": "- The model may not perform well on general computer vision tasks\n- Requires specific image preprocessing for optimal performance\n- Limited to the cell types and imaging modalities seen during training\n- Performance degrades on low-quality or poorly prepared images",
+  "recommendations": "- Review and validate outputs generated by the model\n- Use appropriate preprocessing steps as outlined in documentation\n- Consider domain adaptation for significantly different datasets\n- Always validate results with expert knowledge\n- Follow our Acceptable Use Policy when using the model",
+  "acknowledgements": "Special thanks to the CellPose team for providing training data and insights. Computational resources provided by Chan Zuckerberg Initiative. Dr. Jane Smith provided valuable model architecture insights. Thanks to the Computational Biology Lab for dataset curation and validation."
+}
