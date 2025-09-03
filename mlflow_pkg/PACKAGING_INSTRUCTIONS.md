@@ -24,7 +24,7 @@ For virtual environment library, **you must use `conda` or `virtualenv`** to be 
     $ pip install .
     ```
 
-3. Generate the directory structure in which you will implement the `mlflow` wrapper for your model. This will create a directory called `<model-name>_mlflow_pkg` where you will flesh out the implementation:
+3. Generate the directory structure in which you will implement the `mlflow` wrapper for your model. This will create a directory called `mlflow_pkg` where you will flesh out the implementation:
 
     ```
     $ python generate_model_pkg_dir_structure.py --model-name <model-name> --target <target-directory> --pkg-template mlflow_template --model-archetype file_uri_to_tensor
@@ -43,8 +43,8 @@ For virtual environment library, **you must use `conda` or `virtualenv`** to be 
     ├── mlflow_packager.py
     ├── generate_requirements_txt.py
     ├── model_code
-    │   ├── __init__.py
-    │   └── transcriptformer_mlflow_model.py
+    │   ├── __init__.py
+    │   └── transcriptformer_mlflow_model.py
     ├── model_data
     ├── model_spec.py
     └── requirements.in
@@ -114,10 +114,10 @@ Specify the schema for the inputs and outputs of the model by filling out `model
 
 - A real input example. The `input_uri` field should point to a real input file because the packaging script will verify correctness by running the input example through a forward pass.
 
-The doc strings in `model_spec.py` give detailed guidance on how to fill in this file. See the **INSTRUCTIONS FOR CUSTOMIZATION** section in the module doc string.
+The docstrings in `model_spec.py` give detailed guidance on how to fill in this file. See the **INSTRUCTIONS FOR CUSTOMIZATION** section in the module docstring.
 
 # Create a **MLflow PythonModel** wrapper
-1. Complete the implementation of the following methods in the `model_code/<model-name>_mlflow_model.py` file. The doc strings on these methods provide guidance on how to implement them:
+1. Complete the implementation of the following methods in the `model_code/<model-name>_mlflow_model.py` file. The docstrings on these methods provide guidance on how to implement them:
 
     ```
     def load_context(self, context: mlflow.pyfunc.PythonModelContext) -> None:
@@ -159,12 +159,12 @@ The doc strings in `model_spec.py` give detailed guidance on how to fill in this
     mlflow_model_artifact/
     ├── MLmodel
     ├── artifacts
-    │   └── tf_sapiens
-    │       ├── config.json
-    │       ├── model_weights.pt
-    │       └── vocabs
-    │           ├── assay_vocab.json
-    │           └── homo_sapiens_gene.h5
+    │   └── tf_sapiens
+    │       ├── config.json
+    │       ├── model_weights.pt
+    │       └── vocabs
+    │           ├── assay_vocab.json
+    │           └── homo_sapiens_gene.h5
     ├── conda.yaml
     ├── input_example.json
     ├── python_env.yaml
