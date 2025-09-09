@@ -1,6 +1,8 @@
 _exclude:
     - licenses
     - .git
+    # Uncomment the line below if you want to exclude .gitkeep from generated projects
+    # - "{{model_name_slug}}_mlflow_pkg/model_data/.gitkeep"
 
 # Control variable to determine interactive vs data-file mode
 interactive_mode:
