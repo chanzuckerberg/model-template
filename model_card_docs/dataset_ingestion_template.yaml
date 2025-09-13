@@ -1,0 +1,73 @@
+### Dataset Ingestion Template
+
+# How to use this YAML file:
+# - Make one copy of this template for each dataset that you need to add (e.g dataset is private and does not have a public link)
+# - Change the name of this file to be dataset_ingestion_[datasetName].yaml
+# - Fill in your information within the quotations ("") or choose an item from a list by deleting the irrelevant items
+# - If you need assistance, feel free to reach out to virtualcellmodels@chanzuckerberg.com
+
+# To gather Dataset metadata, we use the ~Cross Modality Schema~ which standardizes biological information.
+# https://github.com/chanzuckerberg/data-guidance/blob/main/standards/cross-modality/1.1.0/schema.md
+dataset_name: ""
+dataset_licenses:
+  - type: ""                    #   e.g "CC BY 4.0"
+    url: ""                     #   e.g "https://creativecommons.org/licenses/by/4.0/deed.en"
+dataset_version: ""
+dataset_url: ""
+dataset_date_published: ""               # YYYY-MM-DD
+dataset_collection_timeframe: ""         # YYYY-MM/YYYY-MM
+dataset_first_used_in_model_dev: ""      # YYYY-MM When was the dataset first used during model development?
+includes_consumer_info: ""               # one of "Yes" or "No". Does the dataset include any aggregate consumer information?
+dataset_modality:                        # can be "Imaging" or "Transcriptomic" or "Text" (or more that one of those)
+  - Imaging
+  - Transcriptomic
+  - Text
+# If dataset_modality = Transcriptomic:
+assay_ontology_term_id: [""]             # e.g. ["EFO:0009922"] Search the Experimental Factor Ontology (https://www.ebi.ac.uk/ols4/ontologies/efo/) for dataset assay like "10x 3' v3" or "Perturb-Seq" and copy the id.
+assay: [""]                              # Human-readable name assigned to the corresponding element in assay_ontology_term_id
+# If dataset_modality = Imaging
+imaging_technologies:                    # Choose imaging technology types from the list below and/or write in a different technology
+  - Brightfield Microscopy
+  - Phase Contrast Microscopy
+  - Differential Interference Contrast (DIC)
+  - Fluorescence Microscopy
+  - Confocal Microscopy
+  - Spinning Disk Confocal Microscopy
+  - Two-Photon Microscopy
+  - Total Internal Reflection Fluorescence (TIRF)
+  - STED
+  - SIM
+  - PALM
+  - STORM
+  - Transmission Electron Microscopy (TEM)
+  - Scanning Electron Microscopy (SEM)
+  - Cryo-Electron Microscopy (Cryo-EM)
+  - Cryo-Electron Tomography (Cryo-ET)
+  - Imaging Mass Cytometry (IMC)
+  - Multiplexed Ion Beam Imaging (MIBI)
+  - CODEX
+  - Cyclic Immunofluorescence (CycIF)
+  - Multiplexed Immunohistochemistry (mIHC)
+  - seqFISH / MERFISH
+  - Hematoxylin & Eosin (H&E) Staining
+  - Immunohistochemistry (IHC)
+  - Immunofluorescence (IF)
+  - Whole Slide Imaging (WSI)
+  - Electron microscopy
+  - Cryo-electron microscopy
+  - Fluorescence light microscopy
+  - Transmission light microscopy
+  - Super resolution microscopy
+  - X-ray microscopy
+  - Force microscopy
+  - High-contrast microscopy
+  - Whole-slide microscopy
+disease_ontology_term_id: [""]             # e.g ["PATO:0000461"] for normal or healthy. Please follow these instructions for diseased and injured: https://github.com/chanzuckerberg/data-guidance/blob/main/standards/cross-modality/1.1.0/schema.md#disease_ontology_term_id
+disease: [""]                              # Human-readable name(s) assigned to the corresponding element in disease_ontology_term_id
+organism_ontology_term_id: [""]            # e.g. ["NCBITaxon:9606"] for Human. Please follow these instructions: https://github.com/chanzuckerberg/data-guidance/blob/main/standards/cross-modality/1.1.0/schema.md#organism_ontology_term_id
+development_stage_ontology_term_id: [""]   # Please follow these instructions: https://github.com/chanzuckerberg/data-guidance/blob/main/standards/cross-modality/1.1.0/schema.md#development_stage_ontology_term_id
+development_stage: [""]                    # Human-readable name(s) assigned to the corresponding element in development_stage_ontology_term_id
+tissue_type: [""]                          # one of "tissue", "organoid", "cell culture", "cell line" or "organelle"
+tissue_ontology_term_id: [""]              # Please follow these instructions: https://github.com/chanzuckerberg/data-guidance/blob/main/standards/cross-modality/1.1.0/schema.md#tissue_ontology_term_id
+tissue: [""]                               # Human-readable name(s) assigned to the corresponding element in tissue_ontology_term_id
+num_of_cells: ""                           # Enter an approximate number e.g. 1000000

@@ -76,7 +76,7 @@ release_date:
     help: Model release date (YYYY-MM-DD)
     when: "{{ not interactive_mode }}"
 
-model_domain:
+model_modality:
     type: str
     default: ""
     help: Model domain (Imaging or Transcriptomic)
@@ -112,7 +112,7 @@ compute_requirement:
     help: Compute requirement (GPU or CPU)
     when: "{{ not interactive_mode }}"
 
-system_requirement:
+system_requirements:
     type: str
     default: ""
     help: System requirements description
@@ -142,7 +142,7 @@ model_variants:
     help: List of model variants
     when: "{{ not interactive_mode }}"
 
-training_date:
+dataset_sources:
     type: str
     default: ""
     help: Training date (YYYY-MM-DD)
@@ -160,12 +160,6 @@ output_data_type:
     help: List of output data types
     when: "{{ not interactive_mode }}"
 
-training_datasets:
-    type: json
-    default: []
-    help: List of training datasets
-    when: "{{ not interactive_mode }}"
-
 related_models:
     type: json
     default: []
@@ -178,16 +172,16 @@ related_datasets:
     help: List of related datasets
     when: "{{ not interactive_mode }}"
 
-quickstart_colab_link:
+quickstart_link:
     type: str
     default: ""
-    help: Quickstart Colab notebook link
+    help: Quickstart notebook link
     when: "{{ not interactive_mode }}"
 
-tutorial_colab_link:
+tutorial_link:
     type: str
     default: ""
-    help: Tutorial Colab notebook link
+    help: Tutorial notebook link
     when: "{{ not interactive_mode }}"
 
 model_download_link:
@@ -226,6 +220,12 @@ architecture_details:
     type: str
     default: ""
     help: Detailed architecture description
+    when: "{{ not interactive_mode }}"
+
+training_data:
+    type: str
+    default: ""
+    help: Detailed training data description
     when: "{{ not interactive_mode }}"
 
 training_procedure:
