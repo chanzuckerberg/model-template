@@ -53,11 +53,12 @@ Write descriptive alt text that explains what's in the image for screen readers.
 {{ out_of_scope_uses | default('...') }}
 
 <!-- TRAINING DETAILS SECTION -->
-
-## Training Details
 <!-- This section provides information to describe and replicate training, including the training data and the speed and size of training elements. -->
 
-{{ training_details | default('...') }}
+## Training Data
+<!-- Brief description of the training data, including type of data and dataset size (e.g., 30M cells, 1M cell images with annotations in 35 organelles and subcellular structures), and if possible, include links to data and/or pre-processed data. -->
+
+{{ training_data | default('...') }}
 
 ### Training Procedure
 <!-- Briefly describe the training approach including data pre-processing steps (e.g., steps taken to clean and preprocess the data, detail tokenization, modality dependent resizing/rewriting) -->
