@@ -236,5 +236,6 @@ docker-compose.yaml
 # Kubernetes
 *.yaml
 *.yml
+!mlflow_pkg/metadata.yaml
 !model_card_docs/*.yaml
 !model_card_docs/*.yml
