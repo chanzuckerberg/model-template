@@ -57,6 +57,7 @@
   "training_date": "2023-11-20",
   "uses_synthetic_data": "No",
   "uses_purchased_licensed_data": "No",
+  "flops_used": "200 GFLOPS",
   "input_data_type": ["tiff", "png", "zarr"],
   "output_data_type": ["cell types", "images"],
   "dataset_sources": [
