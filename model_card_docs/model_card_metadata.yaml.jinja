@@ -189,7 +189,7 @@ model_variants:                         # (optional) If applicable. Add one or m
 training_date: "{{ training_date }}"                         # (optional) YYYY-MM-DD
 uses_synthetic_data: "{{ uses_synthetic_data }}"                  # one of "Yes" or "No". Was synthetic data used in developing the model?
 uses_purchased_licensed_data: "{{ uses_purchased_licensed_data }}"          # one of "Yes" or "No". Were any datasets used for model training purchased or licensed? 
-flops_used: "{{ flops_used }}"                            # If available, please share the approximate number of FLOPs used for training your model.
+flops_used: "{{ flops_used }}"                            # (optional) If available, please share the approximate number of FLOPs used for training your model.
 {%- if input_data_type %}
 input_data_type:                          # Choose from any data types below and/or add onto the list
 {%- for data_type in input_data_type %}
