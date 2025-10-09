@@ -1,23 +1,40 @@
 ### Model Card Template - Metadata
 
-# How to use this YAML file:
-# Fill in your information within the quotations ("") e.g. model_display_name: "ModelX"  
-# ~ or ~
-# Add a info block for each item that you would like to add to a category 
-# e.g. authors:  
-#         - name: "Jane Doe"
-#           type: "individual"
-#           affiliates: ["Chan Zuckerberg Initiative", "Stanford University"]   
-#         - name: "Chan Zuckerberg Initiative"
-#           type: "organization"
-# ~ or ~
-# Choose from a list provided by deleting the irrelevant items leaving only the list items you wish to select
-# You can also add your own items to these lists by adding a list item with a dash
-# e.g. tasks_performed_by_model:       
+# How to fill in this template:
+#
+# 1. For simple fields, add your text within the quotations:
+#      compute_requirement: "GPU"   
+#
+# 2. For fields that can have multiple entries, add a block for each one:
+#      authors:  
+#        - name: "Jane Doe"
+#          type: "individual"
+#          affiliates: ["Chan Zuckerberg Initiative", "Stanford University"]   
+#        - name: "Chan Zuckerberg Initiative"
+#          type: "organization"
+#
+# 3. For fields with preset options, delete the ones that don't apply:
+#      tasks_performed_by_model:       
 #        - Cell Clustering
 #        - Cell Labeling
 #        - Cross Species Integration
-#.       - Special Task Added To List
+#
+#    You can also add your own items to some lists:
+#      tasks_performed_by_model:       
+#        - Cell Clustering
+#        - My Custom Task
+#
+# 4. For optional fields: 
+#    If a field doesn't apply to your model, delete (or comment out)
+#    the entire entry rather than leaving it blank:
+#    
+#    Instead of this:
+#      finetuned_from:   # (optional) If applicable. Add one or more.
+#        - model_name: ""
+#          model_url: ""
+#    
+#    Do this:
+#      (delete or comment out everything from "finetuned_from:" through "model_url: """)
 
 ### Basic Info
 model_display_name: "{{ model_display_name }}"
@@ -77,8 +94,8 @@ licenses:                               # Add one or more licenses
   - type: "{{ license_name }}"                            #   e.g "CC BY 4.0"
     url: ""                             #   e.g "https://creativecommons.org/licenses/by/4.0/deed.en"
 {%- endif %}
-compute_requirement: "{{ compute_requirement }}"                # one of "GPU" or "CPU"
-system_requirements: "{{ system_requirements }}"                # (optional) Any other system constraints or requirements you would like to describe.
+compute_requirement: "{{ compute_requirement }}"                 # one of "GPU" or "CPU"
+system_requirements: "{{ system_requirements }}"                 # (optional) Any other system constraints or requirements you would like to describe in a few sentences.
 
 ### Model Details
 {%- if model_architecture_type %}
@@ -136,10 +153,12 @@ tasks_performed_by_model:               # Choose from any tasks below and/or add
   - Hypothesis Generation
   - Image Segmentation
   - Imputation
-  - Perturbation Detection/Prediction
+  - Perturbation Detection
+  - Perturbation Prediction
   - Protein Localization
   - Synthetic Data Generation
-  - Tomogram Alignment / Reconstruction
+  - Tomogram Alignment
+  - Tomogram Reconstruction
   - Virtual Staining
 {%- endif -%}
 {%- if finetuned_from %}
@@ -169,8 +188,9 @@ model_variants:                         # (optional) If applicable. Add one or m
 
 ### Training Details
 training_date: "{{ training_date }}"                         # (optional) YYYY-MM-DD
-uses_synthetic_data: "{{ uses_synthetic_data }}"                  # one of "Yes" or "No". Was synthetic data used in developing the model?
+uses_synthetic_data: "{{ uses_synthetic_data }}"                   # one of "Yes" or "No". Was synthetic data used in developing the model?
 uses_purchased_licensed_data: "{{ uses_purchased_licensed_data }}"          # one of "Yes" or "No". Were any datasets used for model training purchased or licensed? 
+flops_used: "{{ flops_used }}"                            # (optional) If available, please share the approximate number of FLOPs used for training your model.
 {%- if input_data_type %}
 input_data_type:                          # Choose from any data types below and/or add onto the list
 {%- for data_type in input_data_type %}
@@ -262,5 +282,5 @@ related_datasets:                         # (optional) Link any other datasets y
 
 # See the Model Contribution Docs for detailed instructions on providing a Quickstart and Tutorial link: https://chanzuckerberg.github.io/virtual-cells-platform/
 quickstart_link: "{{ quickstart_link }}"                        # template -> https://colab.research.google.com/drive/1VfrAM-BxXwUveDqhdwViD8BOH5yk_FU6
-tutorial_link: "{{ tutorial_link }}"                         # (optional but encouraged) template -> https://colab.research.google.com/drive/1DrRY_mJyYkx3Bg-Y9Ev9X209jGwt8wVF?usp=sharing
-model_download_link: "{{ model_download_link }}"                  # e.g. s3://.. (not needed if model is packaged in MLFlow)
+tutorial_link: "{{ tutorial_link }}"                          # (optional but encouraged) template -> https://colab.research.google.com/drive/1DrRY_mJyYkx3Bg-Y9Ev9X209jGwt8wVF?usp=sharing
+model_download_link: "{{ model_download_link }}"                    # (optional if model is packaged in MLFlow) e.g. s3://.. 
