@@ -93,8 +93,8 @@ licenses:                               # Add one or more licenses
   - type: "{{ license_name }}"                            #   e.g "CC BY 4.0"
     url: ""                             #   e.g "https://creativecommons.org/licenses/by/4.0/deed.en"
 {%- endif %}
-compute_requirement: "{{ compute_requirement }}"                # one of "GPU" or "CPU"
-system_requirements: "{{ system_requirements }}"                # (optional) Any other system constraints or requirements you would like to describe in a few sentences.
+compute_requirement: "{{ compute_requirement }}"                 # one of "GPU" or "CPU"
+system_requirements: "{{ system_requirements }}"                 # (optional) Any other system constraints or requirements you would like to describe in a few sentences.
 
 ### Model Details
 {%- if model_architecture_type %}
@@ -187,7 +187,7 @@ model_variants:                         # (optional) If applicable. Add one or m
 
 ### Training Details
 training_date: "{{ training_date }}"                         # (optional) YYYY-MM-DD
-uses_synthetic_data: "{{ uses_synthetic_data }}"                  # one of "Yes" or "No". Was synthetic data used in developing the model?
+uses_synthetic_data: "{{ uses_synthetic_data }}"                   # one of "Yes" or "No". Was synthetic data used in developing the model?
 uses_purchased_licensed_data: "{{ uses_purchased_licensed_data }}"          # one of "Yes" or "No". Were any datasets used for model training purchased or licensed? 
 flops_used: "{{ flops_used }}"                            # (optional) If available, please share the approximate number of FLOPs used for training your model.
 {%- if input_data_type %}
@@ -281,5 +281,5 @@ related_datasets:                         # (optional) Link any other datasets y
 
 # See the Model Contribution Docs for detailed instructions on providing a Quickstart and Tutorial link: https://chanzuckerberg.github.io/virtual-cells-platform/
 quickstart_link: "{{ quickstart_link }}"                        # template -> https://colab.research.google.com/drive/1VfrAM-BxXwUveDqhdwViD8BOH5yk_FU6
-tutorial_link: "{{ tutorial_link }}"                         # (optional but encouraged) template -> https://colab.research.google.com/drive/1DrRY_mJyYkx3Bg-Y9Ev9X209jGwt8wVF?usp=sharing
-model_download_link: "{{ model_download_link }}"                  # e.g. s3://.. (not needed if model is packaged in MLFlow)
+tutorial_link: "{{ tutorial_link }}"                          # (optional but encouraged) template -> https://colab.research.google.com/drive/1DrRY_mJyYkx3Bg-Y9Ev9X209jGwt8wVF?usp=sharing
+model_download_link: "{{ model_download_link }}"                    # (optional if model is packaged in MLFlow) e.g. s3://.. 
