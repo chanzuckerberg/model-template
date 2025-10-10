@@ -142,6 +142,8 @@ The doc strings in `model_spec.py` give detailed guidance on how to fill in this
     $ python mlflow_packager.py --model-class model_code.transcriptformer_mlflow_model:TranscriptformerMLflowModel --artifact checkpoint=tf_sapiens --model-config-json '{"model_variant":"tf_sapiens"}' --model-tag model_variant=tf_sapiens
     ```
 
+    If packaging is successful, there should be a folder called `mlflow_model_artifact` in the working directory. 
+
     Example Artifact Output Directory Structure:
 
     ```
