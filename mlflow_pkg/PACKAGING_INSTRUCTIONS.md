@@ -10,6 +10,8 @@ Specifically, using MLflow provides the following concrete benefits:
 
 ## Setup
 
+**NOTE: We recommend packaging models with a GPU instance if the underlying model requires a GPU so you can verify that the packaging works correctly.**
+
 1. Create and activate a Python virtual environment **with the python version supported by your model. Your model must support `python>=3.10` for compatibility with other downstream systems**.
 
 **Please use `conda` or `virtualenv`** to be compatible with our downstream systems by ensuring that package dependencies are resolved in the same way during installation.
@@ -56,7 +58,7 @@ Specifically, using MLflow provides the following concrete benefits:
     ```
 
     **NOTE:** Typically it is sufficient to just provide your pip installable
-    model package or any top level packages in `requirements.in`. The next step will traverse the transitive dependencies of the packages listed in `requirements.in` and produce complete package dependency list in a `requirements.txt` file.
+    model package or any top level packages in `requirements.in`. The next step will traverse the transitive dependencies of the packages listed in `requirements.in` and produce a complete package dependency list in a `requirements.txt` file.
 
 5. Generate a `requirements.txt` file from `requirements.in`. This will capture all the transitive dependencies of the packages you listed in `requirements.in`. **Provide the Python version of your virtual environment as an argument.**
 
@@ -82,7 +84,7 @@ Specifically, using MLflow provides the following concrete benefits:
 
     - **Do NOT** use `pip install --no-deps -r requirements.txt` as this bypasses pip's dependency resolver. For example, if your model requires `flash-attn`, `--no-deps` flag will not check that `flash-attn` requires that `torch` be installed first and this might result in an error during installation!
 
-7. Download all necessary artifacts (ex: model weights and auxiliary data) to the `model_data` directory.
+7. Download all necessary artifacts (ex: model weights and auxiliary data) to the `model_data` directory. Also add any example input data to the folder.
 
     Example:
 
@@ -132,13 +134,15 @@ The doc strings in `model_spec.py` give detailed guidance on how to fill in this
     To run the script, you must provide the following arguments:
     - `--model-class`: The fully qualified class name of your `MLflow PythonModel` implementation. For example, if your model class is called `TranscriptformerMLflowModel` and it is implemented in the `model_code/transcriptformer_mlflow_model.py` file, then you would provide `model_code.transcriptformer_mlflow_model:TranscriptformerMLflowModel`.
     - `--artifact`: A `key=value` pair with the name and relative path in `model_data` that contains the model weights and other files required for your model. The `key` is defined in your `load_context` method as the key in the `context.artifacts` dictionary. The `value` is the relative path to the directory in `model_data` that contains your model weights and other files.
-    - `--model-config-json`: A json string that captures any configuration parameters required to instantiate your model. This json string will be passed as a dictionary to your model class's constructor. If your model does not require any configuration parameters, you can provide an empty json object (`{}`).
+    - `--model-config-json`: A json string that captures any configuration parameters required to instantiate your model. This json string will be passed as a dictionary to your model class's constructor. If your model does not require any configuration parameters, you can omit the argument.
 
     Example:
 
     ```
     $ python mlflow_packager.py --model-class model_code.transcriptformer_mlflow_model:TranscriptformerMLflowModel --artifact checkpoint=tf_sapiens --model-config-json '{"model_variant":"tf_sapiens"}' --model-tag model_variant=tf_sapiens
     ```
+
+    If packaging is successful, there should be a folder called `mlflow_model_artifact` in the working directory. 
 
     Example Artifact Output Directory Structure:
 
@@ -166,6 +170,17 @@ The doc strings in `model_spec.py` give detailed guidance on how to fill in this
     └── serving_input_example.json
     ```
 
+2. After successfully packaging the model, update the `mlflow_pkg/packaging_metadata.yaml` file with your packaging arguments. Replace the existing `variant: command_after_mlflow_packager` placeholder with your actual model variant and command. Remove any single quotes from the command.
+
+    Example (for the command above):
+
+    ```yaml
+    variants:
+        tf_sapiens: --model-class model_code.transcriptformer_mlflow_model:TranscriptformerMLflowModel --artifact checkpoint=tf_sapiens --model-config-json {"model_variant":"tf_sapiens"} --model-tag model_variant=tf_sapiens
+    ```
+
+    **Note:** Additional variants can be added as needed. 
+
 ## Use the **MLflow Model** to run inference locally!
 
 1. Create a json input payload by copying `serving_input_example.json` from the `mlflow_model_artifact` into your current directory and modifying its contents appropriately:
@@ -175,7 +190,6 @@ The doc strings in `model_spec.py` give detailed guidance on how to fill in this
     ```
 
     Example:
-
     ```
     $ cat serving_input_example.json
 
@@ -186,7 +200,7 @@ The doc strings in `model_spec.py` give detailed guidance on how to fill in this
         ],
         "data": [
           [
-            "/home/user/datasets/example_small.h5ad"
+            "model_data/example_small.h5ad"
           ]
         ]
       },
@@ -195,6 +209,7 @@ The doc strings in `model_spec.py` give detailed guidance on how to fill in this
         "precision": "16-mixed",
         "gene_col_name": "ensembl_id"
       }
+    }
     ```
 
 2. Run inference:
@@ -203,7 +218,7 @@ The doc strings in `model_spec.py` give detailed guidance on how to fill in this
     $ mlflow models predict --model-uri ./mlflow_model_artifact --content-type json --input-path serving_input_example.json --output-path test_output.json --env-manager <virtualenv-manager>
     ```
 
-    **You must specify `conda` or `virtualenv` for `--env-manager`** to be compatible with our downstreams systems.
+    **You must specify `conda` or `virtualenv` for `--env-manager`** to be compatible with our downstream systems.
 
     Example Usage:
 
