@@ -1,4 +1,6 @@
-# Why use MLflow to package models
+# Packaging Instructions for MLflow Models
+
+## Why use MLflow to package models
 
 MLflow allows you to package and distribute your model in a way that makes it easy for other users to use your model to run inference. It also makes it easy for model serving platforms (e.g. SageMaker, Databricks, Azure ML, etc.), to serve your model as a web service. Read about the [MLflow Model Format](https://mlflow.org/docs/latest/ml/model) to learn more.
 
@@ -10,7 +12,7 @@ Specifically, using MLflow provides the following concrete benefits:
 
 ## Setup
 
-**NOTE: We recommend packaging models with a GPU instance if the underlying model requires a GPU so you can verify that the packaging works correctly.**
+**NOTE: If your model requires a GPU for inference, we recommend packaging your model with a GPU instance as well. This is not required, but will make it easier for you to verify if your model was packaged correctly.**
 
 1. Create and activate a Python virtual environment **with the python version supported by your model. Your model must support `python>=3.10` for compatibility with other downstream systems**.
 
@@ -68,7 +70,7 @@ Specifically, using MLflow provides the following concrete benefits:
     $ python generate_requirements_txt.py --requirements-in requirements.in --python-version 3.11
     ```
 
-    **NOTE**: This script requires either `pip-tools` or `uv` to be installed in your virtual environment. Refer to their documentation for installation instructions.
+    **NOTE:**: This script requires either `pip-tools` or `uv` to be installed in your system. Refer to their documentation for installation instructions.
 
 6. Install the packages frozen in `requirements.txt` in your current virtual environment:
 
@@ -76,21 +78,9 @@ Specifically, using MLflow provides the following concrete benefits:
     $ pip install -r requirements.txt
     ```
 
-    **NOTES:**
-
-    - We are installing packages in the `requirements.txt` because subsequent steps (ex: downloading model weights) may require tools bundled in your model's python package.
-
-    - We are using `pip` to install packages (instead of `uv`) because `uv` does not enforce the upper bound of versions in `requires-python` directive.
-
-    - **Do NOT** use `pip install --no-deps -r requirements.txt` as this bypasses pip's dependency resolver. For example, if your model requires `flash-attn`, `--no-deps` flag will not check that `flash-attn` requires that `torch` be installed first and this might result in an error during installation!
+    **NOTE:** We are installing packages in the `requirements.txt` because subsequent steps (ex: downloading model weights) may require tools bundled in your model's python package.
 
 7. Download all necessary artifacts (ex: model weights and auxiliary data) to the `model_data` directory. Also add any example input data to the folder.
-
-    Example:
-
-    ```
-    $ transcriptformer download tf-sapiens --checkpoint-dir model_data/
-    ```
 
 ## Specify the model's input/output schema
 
@@ -124,12 +114,12 @@ The doc strings in `model_spec.py` give detailed guidance on how to fill in this
     See the thorough module docstring for `mlflow_packager.py` or get thorough CLI usage documentation by typing `python mlflow_packager.py --help`.
 
     **NOTE:**
-    The script has a `--skip-inference` switch that will package the model and 
+    The script has a `--skip-inference` switch that will package the model and
     skip the inference step. This switch is meant for local testing or for a CI script
     that will run model packaging and inference in separate steps.
 
     We **HIGHLY RECOMMEND** you run the `mlflow_packager.py` script **without** the `--skip-inference` switch so that you can verify that the packaged model can indeed
-    run a forward pass!
+    run a forward pass! You may need to use a machine with a GPU if your model requires one.
 
     To run the script, you must provide the following arguments:
     - `--model-class`: The fully qualified class name of your `MLflow PythonModel` implementation. For example, if your model class is called `TranscriptformerMLflowModel` and it is implemented in the `model_code/transcriptformer_mlflow_model.py` file, then you would provide `model_code.transcriptformer_mlflow_model:TranscriptformerMLflowModel`.
@@ -142,7 +132,7 @@ The doc strings in `model_spec.py` give detailed guidance on how to fill in this
     $ python mlflow_packager.py --model-class model_code.transcriptformer_mlflow_model:TranscriptformerMLflowModel --artifact checkpoint=tf_sapiens --model-config-json '{"model_variant":"tf_sapiens"}' --model-tag model_variant=tf_sapiens
     ```
 
-    If packaging is successful, there should be a folder called `mlflow_model_artifact` in the working directory. 
+    If packaging is successful, there should be a folder called `mlflow_model_artifact` in the working directory.
 
     Example Artifact Output Directory Structure:
 
@@ -179,7 +169,7 @@ The doc strings in `model_spec.py` give detailed guidance on how to fill in this
         tf_sapiens: --model-class model_code.transcriptformer_mlflow_model:TranscriptformerMLflowModel --artifact checkpoint=tf_sapiens --model-config-json {"model_variant":"tf_sapiens"} --model-tag model_variant=tf_sapiens
     ```
 
-    **Note:** Additional variants can be added as needed. 
+    **Note:** Additional variants can be added as needed.
 
 ## Use the **MLflow Model** to run inference locally!
 
@@ -235,4 +225,3 @@ The doc strings in `model_spec.py` give detailed guidance on how to fill in this
 
     {"predictions": [[-0.1429818570613861, -0.1260850429534912, 0.040420662611722946, -0.19157768785953522, 0.22647874057292938, 0.15660905838012695, -0.13574902713298798, 0.0721682459115982, 0.024216821417212486, -0.04561154171824455, -0.3007250130176544, 0.08299852907657623, 0.0005049569299444556, 0.003926896024495363, 0.08237997442483902, 0.18843598663806915, -0.008095022290945053, -0.012726053595542908, -0.11273445188999176, 0.03558430075645447, -0.050463370978832245, 0.18308386206626892, 0.07628823071718216, 0.017358627170324326, 0.027970347553491592, -0.33074551820755005, 0.0716106966137886, 0.15132226049900055, -0.0679834634065628, 0.06222778931260109, -0.13658343255519867, 0.2187119573354721, 0.1522756665945053, 0.023600872606039047, -0.1128731444478035, 0.08771258592605591, 0.045885197818279266, 0.05724436417222023, 0.16931083798408508, -0.1518353968858719, 0.03722844272851944, -0.13497602939605713, -0.015310755930840969, -0.10012456774711609, -0.03223331272602081, 0.2051643580198
     ```
-
