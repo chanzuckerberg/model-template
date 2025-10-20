@@ -237,5 +237,6 @@ docker-compose.yaml
 *.yaml
 *.yml
 !mlflow_pkg/metadata.yaml
+!mlflow_pkg/packaging_metadata.yaml
 !model_card_docs/*.yaml
 !model_card_docs/*.yml
