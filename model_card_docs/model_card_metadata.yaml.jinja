@@ -3,42 +3,42 @@
 # How to fill in this template:
 #
 # 1. For simple fields, add your text within the quotations:
-#      compute_requirement: "GPU"   
+#      compute_requirement: "GPU"
 #
 # 2. For fields that can have multiple entries, add a block for each one:
-#      authors:  
+#      authors:
 #        - name: "Jane Doe"
 #          type: "individual"
-#          affiliates: ["Chan Zuckerberg Initiative", "Stanford University"]   
+#          affiliates: ["Chan Zuckerberg Initiative", "Stanford University"]
 #        - name: "Chan Zuckerberg Initiative"
 #          type: "organization"
 #
 # 3. For fields with preset options, delete the ones that don't apply:
-#      tasks_performed_by_model:       
+#      tasks_performed_by_model:
 #        - Cell Clustering
 #        - Cell Labeling
 #        - Cross Species Integration
 #
 #    You can also add your own items to some lists:
-#      tasks_performed_by_model:       
+#      tasks_performed_by_model:
 #        - Cell Clustering
 #        - My Custom Task
 #
-# 4. For optional fields: 
+# 4. For optional fields:
 #    If a field doesn't apply to your model, delete (or comment out)
 #    the entire entry rather than leaving it blank:
-#    
+#
 #    Instead of this:
 #      finetuned_from:   # (optional) If applicable. Add one or more.
 #        - model_name: ""
 #          model_url: ""
-#    
+#
 #    Do this:
 #      (delete or comment out everything from "finetuned_from:" through "model_url: """)
 
 ### Basic Info
 model_display_name: "{{ model_display_name }}"
-model_version: "{{ model_version }}"                       # vX.X.X or YYYY-MM-DD format
+model_version: "{{ model_version }}"                       # vX or vX.X.X or YYYY-MM-DD format
 primary_contact_email: "{{ primary_contact_email }}"
 repository_link: "{{ repository_link }}"
 publication_preprint_link: "{{ publication_preprint_link }}"
@@ -60,7 +60,7 @@ model_modality:                         # can be "Imaging" or "Transcriptomic" o
   - Text
 {%- endif %}
 model_description: "{{ model_description }}"
-short_description: "{{ short_description }}"                  # Max 160 characters
+short_description: "{{ short_description }}"                   # Max 160 characters
 {%- if authors %}
 authors:                                # List one or more individuals or organizations 
 {%- for author in authors %}
@@ -94,7 +94,7 @@ licenses:                               # Add one or more licenses
   - type: "{{ license_name }}"                            #   e.g "CC BY 4.0"
     url: ""                             #   e.g "https://creativecommons.org/licenses/by/4.0/deed.en"
 {%- endif %}
-compute_requirement: "{{ compute_requirement }}"                 # one of "GPU" or "CPU"
+compute_requirement: "{{ compute_requirement }}"                 # Minimum compute requirement: one of "GPU" (requires GPU) or "CPU" (runs on CPU or GPU)
 system_requirements: "{{ system_requirements }}"                 # (optional) Any other system constraints or requirements you would like to describe in a few sentences.
 
 ### Model Details
