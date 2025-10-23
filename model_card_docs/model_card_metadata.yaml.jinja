@@ -13,11 +13,11 @@
 #        - name: "Chan Zuckerberg Initiative"
 #          type: "organization"
 #
-# 3. For fields with preset options, delete the ones that don't apply:
+# 3. For fields with suggested options, uncomment the ones that apply to your model:
 #      tasks_performed_by_model:
-#        - Cell Clustering
-#        - Cell Labeling
-#        - Cross Species Integration
+#         - Cell Clustering
+#      #  - Cell Labeling
+#      #  - Cross Species Integration
 #
 #    You can also add your own items to some lists:
 #      tasks_performed_by_model:
@@ -25,8 +25,8 @@
 #        - My Custom Task
 #
 # 4. For optional fields:
-#    If a field doesn't apply to your model, delete (or comment out)
-#    the entire entry rather than leaving it blank:
+#    If a field doesn't apply to your model, make sure the entire entry
+#    is commented out (or deleted) rather than leaving it blank:
 #
 #    Instead of this:
 #      finetuned_from:   # (optional) If applicable. Add one or more.
@@ -34,40 +34,43 @@
 #          model_url: ""
 #
 #    Do this:
-#      (delete or comment out everything from "finetuned_from:" through "model_url: """)
+#     # finetuned_from:   # (optional) If applicable. Add one or more.
+#     #  - model_name: ""
+#     #    model_url: ""
 
 ### Basic Info
 model_display_name: "{{ model_display_name }}"
-model_version: "{{ model_version }}"                       # vX or vX.X.X or YYYY-MM-DD format
+model_version: "{{ model_version }}"                      # vX or vX.X.X or YYYY-MM-DD format
 primary_contact_email: "{{ primary_contact_email }}"
 repository_link: "{{ repository_link }}"
 publication_preprint_link: "{{ publication_preprint_link }}"
-release_date: "{{ release_date }}"                        # YYYY-MM-DD
+release_date: "{{ release_date }}"                       # YYYY-MM-DD
 {%- if model_modality %}
 {%- if model_modality is string %}
-model_modality:                         # can be "Imaging" or "Transcriptomic" or "Text" (or more that one of those)
+model_modality:                        # can be "Imaging" or "Transcriptomic" or "Reasoning" or "Genomic" (or more than one of those)
   - {{ model_modality }}
 {%- elif model_modality is iterable %}
-model_modality:                         # can be "Imaging" or "Transcriptomic" or "Text" (or more that one of those)
+model_modality:                        # can be "Imaging" or "Transcriptomic" or "Reasoning" or "Genomic" (or more than one of those)
 {%- for modality in model_modality %}
   - {{ modality }}
 {%- endfor %}
 {%- endif %}
 {%- else %}
-model_modality:                         # can be "Imaging" or "Transcriptomic" or "Text" (or more that one of those)
-  - Imaging
-  - Transcriptomic
-  - Text
+model_modality:                        # can be "Imaging" or "Transcriptomic" or "Reasoning" or "Genomic" (or more than one of those)
+#  - Imaging
+#  - Transcriptomic
+#  - Reasoning
+#  - Genomic
 {%- endif %}
 model_description: "{{ model_description }}"
-short_description: "{{ short_description }}"                   # Max 160 characters
+short_description: "{{ short_description }}"                  # Max 160 characters
 {%- if authors %}
-authors:                                # List one or more individuals or organizations 
+authors:                               # List one or more individuals or organizations 
 {%- for author in authors %}
   - name: "{{ author.name }}"
-    type: "{{ author.type }}"                           #   one of "individual" or "organization"
+    type: "{{ author.type }}"                          #   one of "individual" or "organization"
     {%- if author.affiliates %}
-    affiliates:                         #   (optional) if it is an "individual", add one or more affiliated organizations
+    affiliates:                        #   (optional) if it is an "individual", add one or more affiliated organizations
     {%- if author.affiliates is string %}
       - "{{ author.affiliates }}"
     {%- elif author.affiliates is iterable %}
@@ -78,54 +81,54 @@ authors:                                # List one or more individuals or organi
     {%- endif %}
 {%- endfor -%}
 {%- else %}
-authors:                                # List one or more individuals or organizations 
+authors:                               # List one or more individuals or organizations
   - name: ""
-    type: ""                            #   one of "individual" or "organization"
-    affiliates: [""]                    #   (optional) if it is an "individual", add one or more affiliated organization name
+    type: ""                           # one of "individual" or "organization"
+#    affiliates: [""]                  # (optional) if it is an "individual", add one or more affiliated organization name
 {%- endif -%}
 {%- if licenses %}
-licenses:                               # Add one or more licenses
+licenses:                              # Add one or more licenses
 {%- for license in licenses %}
-  - type: "{{ license.type }}"                          #   e.g "CC BY 4.0"
-    url: "{{ license.url }}"                            #    e.g "https://creativecommons.org/licenses/by/4.0/deed.en"
+  - type: "{{ license.type }}"                         # e.g "CC BY 4.0"
+    url: "{{ license.url }}"                           # e.g "https://creativecommons.org/licenses/by/4.0/deed.en"
 {%- endfor -%}
 {%- else %}
-licenses:                               # Add one or more licenses
-  - type: "{{ license_name }}"                            #   e.g "CC BY 4.0"
-    url: ""                             #   e.g "https://creativecommons.org/licenses/by/4.0/deed.en"
+licenses:                              # Add one or more licenses
+  - type: "{{ license_name }}"                           # e.g "CC BY 4.0"
+    url: ""                            # e.g "https://creativecommons.org/licenses/by/4.0/deed.en"
 {%- endif %}
-compute_requirement: "{{ compute_requirement }}"                 # Minimum compute requirement: one of "GPU" (requires GPU) or "CPU" (runs on CPU or GPU)
-system_requirements: "{{ system_requirements }}"                 # (optional) Any other system constraints or requirements you would like to describe in a few sentences.
+compute_requirement: "{{ compute_requirement }}"                # Minimum compute requirement: one of "GPU" (requires GPU) or "CPU" (runs on CPU or GPU)
+# system_requirements: "{{ system_requirements }}"              # (optional) Any other system constraints or requirements you would like to describe in a few sentences.
 
 ### Model Details
 {%- if model_architecture_type %}
-model_architecture_type:                # Choose from any architectures or packages below and/or add onto the list
+model_architecture_type:               # Choose from any architectures or packages below and/or add onto the list
 {%- for arch in model_architecture_type %}
   - {{ arch }}
 {%- endfor -%}
 {%- else %}
-model_architecture_type:                # Choose from any architectures or packages below and/or add onto the list
-  - PyTorch
-  - TensorFlow
-  - JAX
-  - Safetensors
-  - Transformers
-  - PEFT
-  - TensorBoard
-  - GGUF
-  - Diffusers
-  - ONNX
-  - stable-baselines3
-  - sentence-transformers
-  - ml-agents
-  - MLX
-  - TF-Keras
-  - Adapters
-  - Keras
-  - setfit
-  - timm
-  - sample-factory
-  - Transformers.js
+model_architecture_type:               # Choose from any architectures or packages below and/or add onto the list
+#  - PyTorch
+#  - TensorFlow
+#  - JAX
+#  - Safetensors
+#  - Transformers
+#  - PEFT
+#  - TensorBoard
+#  - GGUF
+#  - Diffusers
+#  - ONNX
+#  - stable-baselines3
+#  - sentence-transformers
+#  - ml-agents
+#  - MLX
+#  - TF-Keras
+#  - Adapters
+#  - Keras
+#  - setfit
+#  - timm
+#  - sample-factory
+#  - Transformers.js
 {%- endif -%}
 {%- if tasks_performed_by_model %}
 tasks_performed_by_model:               # Choose from any tasks below and/or add onto the list
@@ -134,153 +137,155 @@ tasks_performed_by_model:               # Choose from any tasks below and/or add
 {%- endfor -%}
 {%- else %}
 tasks_performed_by_model:               # Choose from any tasks below and/or add onto the list
-  - Batch Correction
-  - Causal Inference
-  - Cell Clustering
-  - Cell Labeling
-  - Cell Morphology Profiling
-  - Cell Type Annotation
-  - Cell Type Classification
-  - Contrast Transfer Function (CTF) Estimation
-  - Cross Species Integration
-  - CryoET Particle Picking
-  - Data Integration
-  - Differential Expression
-  - Feature Extraction
-  - Frame Alignment & Motion Correction
-  - Gene Co-expression Prediction
-  - Gene Network Inference
-  - Hypothesis Generation
-  - Image Segmentation
-  - Imputation
-  - Perturbation Detection
-  - Perturbation Prediction
-  - Protein Localization
-  - Synthetic Data Generation
-  - Tomogram Alignment
-  - Tomogram Reconstruction
-  - Virtual Staining
+#  - Batch Correction
+#  - Causal Inference
+#  - Cell Clustering
+#  - Cell Labeling
+#  - Cell Morphology Profiling
+#  - Cell Type Annotation
+#  - Cell Type Classification
+#  - Contrast Transfer Function (CTF) Estimation
+#  - Cross Species Integration
+#  - CryoET Particle Picking
+#  - Data Integration
+#  - Differential Expression
+#  - Feature Extraction
+#  - Frame Alignment & Motion Correction
+#  - Gene Co-expression Prediction
+#  - Gene Network Inference
+#  - Hypothesis Generation
+#  - Image Segmentation
+#  - Imputation
+#  - Perturbation Detection
+#  - Perturbation Prediction
+#  - Protein Localization
+#  - Synthetic Data Generation
+#  - Tomogram Alignment
+#  - Tomogram Reconstruction
+#  - Virtual Staining
 {%- endif -%}
+
 {%- if finetuned_from %}
-finetuned_from:                         # (optional) If applicable. Add one or more.
+# finetuned_from:                       # (optional) If applicable. Add one or more.
 {%- for model in finetuned_from %}
-  - model_name: "{{ model.model_name }}"
-    model_url: "{{ model.model_url }}"
+#  - model_name: "{{ model.model_name }}"
+#    model_url: "{{ model.model_url }}"
 {%- endfor -%}
 {%- else %}
-finetuned_from:                         # (optional) If applicable. Add one or more.
-  - model_name: ""
-    model_url: ""
+# finetuned_from:                       # (optional) If applicable. Add one or more.
+#  - model_name: ""
+#    model_url: ""
 {%- endif -%}
 {%- if model_variants %}
-model_variants:                         # (optional) If applicable. Add one or more.
+# model_variants:                       # (optional) If applicable. Add one or more.
 {%- for variant in model_variants %}
-  - variant_name: "{{ variant.variant_name }}"
-    variant_description: "{{ variant.variant_description }}"
-    variant_url: "{{ variant.variant_url }}"
+#  - variant_name: "{{ variant.variant_name }}"
+#    variant_description: "{{ variant.variant_description }}"
+#    variant_url: "{{ variant.variant_url }}"
 {%- endfor -%}
 {%- else %}
-model_variants:                         # (optional) If applicable. Add one or more.
-  - variant_name: ""
-    variant_description: ""
-    variant_url: ""
+# model_variants:                       # (optional) If applicable. Add one or more.
+#  - variant_name: ""
+#    variant_description: ""
+#    variant_url: ""
 {%- endif %}
 
 ### Training Details
-training_date: "{{ training_date }}"                         # (optional) YYYY-MM-DD
-uses_synthetic_data: "{{ uses_synthetic_data }}"                   # one of "Yes" or "No". Was synthetic data used in developing the model?
-uses_purchased_licensed_data: "{{ uses_purchased_licensed_data }}"          # one of "Yes" or "No". Were any datasets used for model training purchased or licensed? 
-flops_used: "{{ flops_used }}"                            # (optional) If available, please share the approximate number of FLOPs used for training your model.
+# training_date: "{{ training_date }}"                     # (optional) YYYY-MM-DD
+uses_synthetic_data: "{{ uses_synthetic_data }}"                 # one of "Yes" or "No". Was synthetic data used in developing the model?
+uses_purchased_licensed_data: "{{ uses_purchased_licensed_data }}"        # one of "Yes" or "No". Were any datasets used for model training purchased or licensed?
+# flops_used: "{{ flops_used }}"                        # (optional) If available, please share the approximate number of FLOPs used for training your model.
 {%- if input_data_type %}
-input_data_type:                          # Choose from any data types below and/or add onto the list
+input_data_type:                        # Choose from any data types below and/or add onto the list
 {%- for data_type in input_data_type %}
   - {{ data_type }}
 {%- endfor -%}
 {%- else %}
-input_data_type:                          # Choose from any data types below and/or add onto the list
-  - pdf
-  - svg
-  - png
-  - jpg
-  - zarr
-  - czi
-  - tiff
-  - mrc
-  - hdf5
-  - csv
-  - docx
-  - txt
+input_data_type:                        # Choose from any data types below and/or add onto the list
+#  - pdf
+#  - svg
+#  - png
+#  - jpg
+#  - zarr
+#  - czi
+#  - tiff
+#  - mrc
+#  - hdf5
+#  - csv
+#  - docx
+#  - txt
 {%- endif -%}
 {%- if output_data_type %}
-output_data_type:                         # Choose from any data types below and/or add onto the list
+output_data_type:                       # Choose from any data types below and/or add onto the list
 {%- for data_type in output_data_type %}
   - {{ data_type }}
 {%- endfor -%}
 {%- else %}
-output_data_type:                         # Choose from any data types below and/or add onto the list
-  - embeddings
-  - cell types
-  - images
+output_data_type:                       # Choose from any data types below and/or add onto the list
+#  - embeddings
+#  - cell types
+#  - images
 {%- endif %}
 
 {%- if dataset_sources %}
-dataset_sources:                          # Add one or more datasets used to develop this model
+dataset_sources:                        # Add one or more datasets used to develop this model
 {%- for dataset in dataset_sources %}
   - dataset_name: "{{ dataset.dataset_name }}"
     dataset_version: "{{ dataset.dataset_version }}"
-    dataset_url: "{{ dataset.dataset_url }}"                      # If the dataset has no public url, please fill out the dataset_ingestion_template.yaml file and add the name of the file here. e.g. dataset_ingestion_myModel.yaml
+    dataset_url: "{{ dataset.dataset_url }}"                    # If the dataset has no public url, please fill out the dataset_ingestion_template.yaml file and add the name of the file here. e.g. dataset_ingestion_myModel.yaml
     {%- if dataset.usage %}
     usage:
     {%- if dataset.usage is string %}
-      - {{ dataset.usage }}                         # can be "training" | "evaluation" | "pre-training" or more than one of those
+      - {{ dataset.usage }}                       # can be "training" | "evaluation" | "pre-training" or more than one of those
     {%- elif dataset.usage is iterable %}
     {%- for use in dataset.usage %}
-      - {{ use }}                         # can be "training" | "evaluation" | "pre-training" or more than one of those
+      - {{ use }}                     # can be "training" | "evaluation" | "pre-training" or more than one of those
     {%- endfor %}
     {%- endif %}
     {%- else %}
     usage:
-      - training                          # can be "training" | "evaluation" | "pre-training" or more than one of those
-      - evaluation
-      - pre-training
+#      - training                      # can be "training" | "evaluation" | "pre-training" or more than one of those
+#      - evaluation
+#      - pre-training
     {%- endif %}
 {%- endfor %}
 {%- else %}
-dataset_sources:                          # Add one or more datasets used to develop this model
+dataset_sources:                        # Add one or more datasets used to develop this model
   - dataset_name: ""
     dataset_version: ""
-    dataset_url: ""                       # If the dataset has no public url, please fill out the dataset_ingestion_template.yaml file and add the name of the file here. e.g. dataset_ingestion_myModel.yaml
+    dataset_url: ""                     # If the dataset has no public url, please fill out the dataset_ingestion_template.yaml file and add the name of the file here. e.g. dataset_ingestion_myModel.yaml
     usage:
-      - training                          # can be "training" | "evaluation" | "pre-training" or more than one of those
-      - evaluation
-      - pre-training
+#      - training                       # can be "training" | "evaluation" | "pre-training" or more than one of those
+#      - evaluation
+#      - pre-training
 {%- endif %}
 
 ### Other Resources
 {%- if related_models %}
-related_models:                           # (optional) Link any other models your model should be associated with.
+# related_models:                       # (optional) Link any other models your model should be associated with.
 {%- for model in related_models %}
-  - model_name: "{{ model.model_name }}"
-    model_url: "{{ model.model_url }}"
+#  - model_name: "{{ model.model_name }}"
+#    model_url: "{{ model.model_url }}"
 {%- endfor -%}
 {%- else %}
-related_models:                           # (optional) Link any other models your model should be associated with.
-  - model_name: ""
-    model_url: ""
+# related_models:                       # (optional) Link any other models your model should be associated with.
+#  - model_name: ""
+#    model_url: ""
 {%- endif -%}
 {%- if related_datasets %}
-related_datasets:                         # (optional) Link any other datasets your model should be associated with.
+# related_datasets:                     # (optional) Link any other datasets your model should be associated with.
 {%- for dataset in related_datasets %}
-  - dataset_name: "{{ dataset.dataset_name }}"
-    dataset_url: "{{ dataset.dataset_url }}"
+#  - dataset_name: "{{ dataset.dataset_name }}"
+#    dataset_url: "{{ dataset.dataset_url }}"
 {%- endfor -%}
 {%- else %}
-related_datasets:                         # (optional) Link any other datasets your model should be associated with.
-  - dataset_name: ""
-    dataset_url: ""
+# related_datasets:                     # (optional) Link any other datasets your model should be associated with.
+#  - dataset_name: ""
+#    dataset_url: ""
 {%- endif %}
 
 # See the Model Contribution Docs for detailed instructions on providing a Quickstart and Tutorial link: https://chanzuckerberg.github.io/virtual-cells-platform/
-quickstart_link: "{{ quickstart_link }}"                        # template -> https://colab.research.google.com/drive/1VfrAM-BxXwUveDqhdwViD8BOH5yk_FU6
-tutorial_link: "{{ tutorial_link }}"                          # (optional but encouraged) template -> https://colab.research.google.com/drive/1DrRY_mJyYkx3Bg-Y9Ev9X209jGwt8wVF?usp=sharing
-model_download_link: "{{ model_download_link }}"                    # (optional if model is packaged in MLFlow) e.g. s3://.. 
+quickstart_link: "{{ quickstart_link }}"                     # template -> https://colab.research.google.com/drive/1VfrAM-BxXwUveDqhdwViD8BOH5yk_FU6
+# tutorial_link: "{{ tutorial_link }}"                     # (optional but encouraged) template -> https://colab.research.google.com/drive/1DrRY_mJyYkx3Bg-Y9Ev9X209jGwt8wVF?usp=sharing
+model_download_link: "{{ model_download_link }}"                 # (optional if model is packaged in MLFlow) e.g. s3://..
+
