@@ -18,7 +18,7 @@ Specifically, using MLflow provides the following concrete benefits:
 
 **Please use `conda` or `virtualenv`** to be compatible with our downstream systems by ensuring that package dependencies are resolved in the same way during installation.
 
-2. Generate the directory structure in which you will implement the `mlflow` wrapper for your model. You can follow [the instructions on how to use the VCP CLI to submit a model](https://chanzuckerberg.github.io/virtual-cells-platform/cli_usage.html) for more details.
+2. Generate the directory structure in which you will implement the `mlflow` wrapper for your model. You can follow [the instructions on how to use the VCP CLI to submit a model](https://vigilant-adventure-v954m3n.pages.github.io/cli_usage.html) for more details.
 
     Example:
 
