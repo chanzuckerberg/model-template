@@ -90,7 +90,7 @@ Specify the schema for the inputs and outputs of the model by filling out `model
 
 - A real input example. The `input_uri` field should point to a real input file (relative to the `mlflow_pkg` directory) because the packaging script will verify correctness by running the input example through a forward pass.
 
-The doc strings in `model_spec.py` give detailed guidance on how to fill in this file. See the **INSTRUCTIONS FOR CUSTOMIZATION** section in the module doc string.
+The docstrings in `model_spec.py` give detailed guidance on how to fill in this file. See the **INSTRUCTIONS FOR CUSTOMIZATION** section in the module docstring.
 
 ## Create a **MLflow PythonModel** wrapper
 
